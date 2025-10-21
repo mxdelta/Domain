@@ -1,4 +1,52 @@
 # Domain
+	1. Основная самая лучшая справка по Active Directory:
+	https://orange-cyberdefense.github.io/ocd-mindmaps/img/mindmap_ad_dark_classic_2025.03.excalidraw.svg
+
+	2. Основные утилиты, которые необходимы (и на которые стоит обратить внимание в гите выше):
+	1) nmap / masscan
+	2) netdiscover
+	3) nxc (netexec) - лучший швейцарский нож, который умеет делать почти всё.
+	4) impacket - отсюда иногда нужна небольшая группа утилит на полуение билетов. В целом остальное умеет всё nxc.
+	5) certipy-ad - атаки на ADCS.
+	6) ntlmrelayx
+	7) утилиты на конткретные уязвимости: "zerologon", "printnightmare", "ms17-010", coerce-уязвимости ("petitpotam", "printerbug"). Чаще всего это либо metasploit, либо скрипты с гитхаба.
+	8) утилита для атаки timeroasting (timeroast.py).
+	9) связка утилиты nxc --bloodhound + bloodhound + ADMiner
+	10) утилиты rubeus, bloodyad, mimikatz для локального повышения привилегий (если попали на машину не админом).
+	11) утилиты responder для перехвата NetNTLM-хешей
+
+	3. По уязвимостям и инструментам что следует почитать:
+	1) Документацию по утилите netexec: https://www.netexec.wiki
+	2) Уязвимости по ACDS (для утилиты certipy):
+	https://habr.com/ru/companies/jetinfosystems/articles/846066/
+	https://habr.com/ru/companies/pt/articles/916888/
+	3) Курс по Kerberos:
+	https://ardent101.github.io
+	4) Документация по Impacket:
+	https://wadcoms.github.io/wadcoms/Impacket-GetUserSPNs/
+	и пример использования: https://habr.com/ru/companies/ruvds/articles/743444/
+	5) Цикл статей на использование NTLM-Relay:
+	https://habr.com/ru/companies/otus/articles/745648/
+	6) Некоторые атаки на AD, только утилиты не смотрите. Почти всё умеет делать nxc:
+	https://codeby.net/threads/10-metodov-atak-na-active-directory-uglublennyi-razbor-i-zashchita.85281/
+
+	Общий сценарий:
+	1) Сканим сеть на порты + пробуем трансфер зоны DNS, перебор PTR DNS записей + responder.
+	2) Если поймал Responder хеши - в брут (перебор) на видеокартах.
+	3) Основная цель - найти первую учетку.
+	Null-session, guest(Гость), пробуем найти pre2k-машины (когда логин и пароль машинных учетных записей совпадают), пробуем выгрузить логины. 
+	4) Если учетки получили, можно попробовать:
+	- подобрать пароль (password spraying) ~ 1 попытка в 10 минут, чтобы не заблокировать. К примеру пустые пароли, пароль = логину, пароль 123.
+	- пробуем ASREPRoasting. 
+	5) Если учеток нет - ищем уязвимые машины в сети (VNC, telnet, web-уязвимости, иные уязвимости).
+	6) Если добыли учетку - сгружаем BloodHound, строим дополнительно отчет в ADMiner (лично мне нравится оно), ппросто изучаем куда можно ходить с RDP, можем ли RDCD/Constrained/Unonstrained делегирование.
+	Заново запрашиваем pre2k.
+	Обходим все машины на поиск coerce-уязвимостей.
+	Дальше только просто анализировать отношения между учетными записями и что/где мы можем сделать. 
+
+	Собственно чаще всего самое сложное - найти первую учетку.
+	Дальше - придумать как поднять права (RDP / nxc / доступ к шарам + rubeus, bloodyad, mimikatz)
+
 # DOMAIN
 
 
