@@ -206,9 +206,9 @@
    
 * Trasfer DNS ZONE and DNS recon
 
-		nslookup -type=SRV _ldap._tcp.dc._msdcs.dgp.tgk.gazprom.ru 	(домен dgp.tgk.gazprom.ru - поиск контроллеров домена)
-		Общее перечисление SRV-записей с контроллера домена dc2.dgp.gam.ru
-  		nslookup -type=SRV _ldap._tcp.dc._msdcs.gam.ru			(gam.ru) домен
+		nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
+		Общее перечисление SRV-записей с контроллера домена dc2.dgg.game.ru
+  		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru			(game.ru) домен
 
   		dig @10.10.11.5 freelancer.htb axfr		(dns-server   domain)
 		dig @<ip> <домен> NS
