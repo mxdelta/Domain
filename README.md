@@ -237,11 +237,11 @@
 		Файл /etc/resolv.conf — это конфигурационный файл DNS-резолвера
   			nameserver 10.28.16.3
 			nameserver 10.28.16.1
-			search dgp.gazprom.ru
+			search dgg.zazrom.htb
   
   			nameserver 10.28.16.3 и nameserver 10.28.16.1 (Это IP-адреса DNS-серверов, которые ваша система использует для разрешения доменных имен.
 			Система будет обращаться к ним в порядке очередности: сначала к 10.28.16.3, если он недоступен — к 10.28.16.1.)
- 		 	search dgp.gazprom.ru -резлв коротких имен
+ 		 	search dgg.zazrom.htb -резлв коротких имен
 		
 * user found
 		- with Kerbrute
