@@ -51,6 +51,12 @@
 
 
 # Check list domain
+		
+		# Blue Kipper
+		msfconsole
+		use auxiliary/scanner/rdp/cve_2019_0708_bluekeep
+		set RHOSTS <target_ip>
+		run
 
 		* Создание krb5.conf и получение tgt и кербероастинг с помощью nxc (https://github.com/Pennyw0rth/NetExec)
 
