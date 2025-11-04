@@ -231,7 +231,32 @@
 
 		dnstool.py -u 'intelligence\Tiffany.Molina' -p NewIntelligenceCorpUser9876 			10.10.10.248 -a add -r web1 -d 10.10.14.58 -t A (создание ДНС записи в домене)
 
-  
+* Recon Lan
+
+  		fping -ag 10.129.203.0/24
+  		sudo netdiscover -r 10.129.203.0/24
+		sudo netdiscover -i eth0
+		
+  		sudo masscan -p1-1000 10.129.203.0/24 --rate=1000
+  		sudo masscan -p1-1000 10.129.203.6 -oG masscan_results.txt
+
+		# В формате XML
+		sudo masscan -p1-1000 10.129.203.6 -oX masscan_results.xml
+
+		# В формате JSON
+		sudo masscan -p1-1000 10.129.203.6 -oJ masscan_results.json
+
+		# Вывод только открытых портов
+		sudo masscan -p1-1000 10.129.203.6 --open-only
+
+		# Извлечение только IP и портов
+		grep "open" masscan_results.txt | awk '{print $4, $3}'
+
+		# Извлечь IP:порт для последующего сканирования Nmap
+		grep "open" masscan_results.txt | awk -F" " '{print $4}' | awk -F"/" '{print $1}' > nmap_targets.txt
+		# Затем использовать с Nmap
+		nmap -sV -sC -iL nmap_targets.txt -oA scan_results
+
 * DNS resolver
   
 		Файл /etc/resolv.conf — это конфигурационный файл DNS-резолвера
