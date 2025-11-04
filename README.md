@@ -228,7 +228,15 @@
 		> svc_int.intelligence.htb
 		Server:         10.10.10.248
 		Address:        10.10.10.248#53
+*******************************************************
+		vim /etc/hosts/ ----> 10.129.203.6 inlanefreight.htb
+		subfinder -d inlanefreight.com -v
+		git clone https://github.com/TheRook/subbrute.git >> /dev/null 2>&1
+		cd subbrute
+		echo "ns1.inlanefreight.com" > ./resolvers.txt
+		./subbrute.py inlanefreight.com -s ./names.txt -r ./resolvers.txt
 
+*******************************************************
 		dnstool.py -u 'intelligence\Tiffany.Molina' -p NewIntelligenceCorpUser9876 			10.10.10.248 -a add -r web1 -d 10.10.14.58 -t A (создание ДНС записи в домене)
 
 * Recon Lan
