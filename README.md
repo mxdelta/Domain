@@ -302,7 +302,7 @@
 		sudo responder -I ens224 --lm
   		sudo responder -I ens224 -wdF
   		(ответ собирается в /usr/share/responder/logs)
-
+		/usr/share/responder/Responder.conf
 * kerbrute
     		
 		~/kerbrute_linux_amd64 userenum users.txt --dc 192.168.50.110 -d vd.local
