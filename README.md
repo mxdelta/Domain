@@ -270,8 +270,11 @@
 
 		# Извлечение только IP и портов
 		grep "open" masscan_results.txt | awk '{print $4, $3}'
+		sudo masscan -p21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080,8443,9000,9001,10000,513,514,515,548,587,626,993,995,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044 192.168.0.0/24 (-iL hosts.txt) -oG masscan_results.txt --rate 2000
 
-		# Извлечь IP:порт для последующего сканирования Nmap
+		grep "open" masscan_results.txt | awk '{print $4, $7}' |  cut -d'/' -f1
+
+  		# Извлечь IP:порт для последующего сканирования Nmap
 		grep "open" masscan_results.txt | awk -F" " '{print $4}' | awk -F"/" '{print $1}' > nmap_targets.txt
 		# Затем использовать с Nmap
 		nmap -sV -sC -iL nmap_targets.txt -oA scan_results
