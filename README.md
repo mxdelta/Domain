@@ -260,17 +260,17 @@
   		sudo masscan -p1-1000 10.129.203.6 -oG masscan_results.txt
 
 		# В формате XML
-		sudo masscan -p1-1000 10.129.203.6 -oX masscan_results.xml
+		sudo masscan -p1-10000 10.129.203.6 -oX masscan_results.xml
 
 		# В формате JSON
-		sudo masscan -p1-1000 10.129.203.6 -oJ masscan_results.json
+		sudo masscan -p1-10000 10.129.203.6 -oJ masscan_results.json
 
 		# Вывод только открытых портов
-		sudo masscan -p1-1000 10.129.203.6 --open-only
+		sudo masscan -p1-10000 10.129.203.6 --open-only
 
 		# Извлечение только IP и портов
 		grep "open" masscan_results.txt | awk '{print $4, $3}'
-		sudo masscan -p21,22,23,25,53,80,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080,8443,9000,9001,10000,513,514,515,548,587,626,993,995,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044 192.168.0.0/24 (-iL hosts.txt) -oG masscan_results.txt --rate 2000
+		sudo masscan -p21,22,23,25,53,80,88,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080,8443,9000,9001,10000,513,514,515,548,587,626,993,995,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044 192.168.0.0/24 (-iL hosts.txt) -oG masscan_results.txt --rate 2000
 
 		grep "open" masscan_results.txt | awk '{print $4, $7}' |  cut -d'/' -f1
 
