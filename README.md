@@ -299,6 +299,8 @@
 * MultiCast enum
 
 		sudo responder -I ens224
+		sudo responder -I ens224 --lm
+  		sudo responder -I ens224 -wdF
   		(ответ собирается в /usr/share/responder/logs)
 
 * kerbrute
