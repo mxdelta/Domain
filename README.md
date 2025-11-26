@@ -1,3 +1,8 @@
+# Частные сети
+	10.0.0.0/8
+	172.16.0.0/12
+	192.168.0.0/16
+
 # Domain
 	1. Основная самая лучшая справка по Active Directory:
 	https://orange-cyberdefense.github.io/ocd-mindmaps/img/mindmap_ad_dark_classic_2025.03.excalidraw.svg
