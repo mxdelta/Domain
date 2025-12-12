@@ -1,3 +1,8 @@
+# deb https://mirror.truenetwork.ru/kali kali-rolling main non-free contrib
+	https://0xma.github.io/hacking/metasploit_privilege_escalation.html
+	use post/multi/recon/local_exploit_suggester
+
+
 # Частные сети
 	10.0.0.0/8
 	172.16.0.0/12
