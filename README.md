@@ -1,4 +1,5 @@
-# deb https://mirror.truenetwork.ru/kali kali-rolling main non-free contrib
+# 		
+	deb https://mirror.truenetwork.ru/kali kali-rolling main non-free contrib
 	https://0xma.github.io/hacking/metasploit_privilege_escalation.html
 	use post/multi/recon/local_exploit_suggester
 
