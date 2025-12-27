@@ -678,7 +678,9 @@
   		findDelegation.py INLANEFREIGHT.LOCAL/carole.rose:jasmine
 		nxc ldap  172.16.8.3 -u annette.jackson -p horses -k --trusted-for-delegation --find-delegation
 * Unconstrained delegation
-		# from linux
+	проверка на делегирование с виндовс	Get-ADComputer -Filter {TrustedForDelegation -eq $true} -Properties TrustedForDelegation | Select-Object Name
+
+  # from linux
 		https://www.praetorian.com/blog/unconstrained-delegation-active-directory/
   
   		git clone -q https://github.com/dirkjanm/krbrelayx; cd krbrelayx
