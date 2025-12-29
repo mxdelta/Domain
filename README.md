@@ -63,11 +63,10 @@
 
 # Check list domain
 		
-		# Blue Kipper
-		msfconsole
-		use auxiliary/scanner/rdp/cve_2019_0708_bluekeep
-		set RHOSTS <target_ip>
-		run
+		
+		
+		nxc smb 192.168.50.0/24 поиск все машин
+		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
 
 		* Создание krb5.conf и получение tgt и кербероастинг с помощью nxc (https://github.com/Pennyw0rth/NetExec)
 
@@ -229,6 +228,7 @@
 		nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
 		Общее перечисление SRV-записей с контроллера домена dc2.dgg.game.ru
   		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru			(game.ru) домен
+		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
 
   		dig @10.10.11.5 freelancer.htb axfr		(dns-server   domain)
 		dig @<ip> <домен> NS
