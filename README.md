@@ -2,7 +2,7 @@
 	deb https://mirror.truenetwork.ru/kali kali-rolling main non-free contrib
 	https://0xma.github.io/hacking/metasploit_privilege_escalation.html
 	use post/multi/recon/local_exploit_suggester
-
+	faketime "$(ntpdate -q nanocorp.htb | awk '{print $1" "$2}')" bash
 
 # Частные сети
 	10.0.0.0/8
