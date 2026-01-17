@@ -443,6 +443,9 @@
 
 
 # Проверка сертификатов
+
+		https://github.com/ly4k/Certipy/wiki/06-‐-Privilege-Escalation
+		
 *** Поиск центра сертификации
 
 		crackmapexec ldap 'dc.sequel.htb' -d 'sequel.htb' -u 'Ryan.Cooper' -p 'NuclearMosquito3' -M adcs
