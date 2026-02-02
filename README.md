@@ -1671,6 +1671,15 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 
 # Proxylogon
 	
+	curl https://10.129.231.81/ecp/Current/exporttool/microsoft.exchange.ediscovery.exporttool.application -k | xmllint --format - | grep version 
+	
+	The following versions of Microsoft Exchange are vulnerable to the exploit:
+
+    Exchange Server 2019 < 15.02.0792.010
+    Exchange Server 2019 < 15.02.0721.013
+    Exchange Server 2016 < 15.01.2106.013
+    Exchange Server 2013 < 15.00.1497.012
+
 	exploit(windows/http/exchange_proxylogon_rce)
 	msf exploit(windows/http/exchange_proxylogon_rce)
 
