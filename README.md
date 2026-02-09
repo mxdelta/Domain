@@ -1668,6 +1668,10 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 
 	pipx install git+https://github.com/garrettfoster13/sccmhunter/
 	sccmhunter.py find -u adm -p 'Apolo' -d kaban.zazprom.ru -dc-ip 10.*.*.*-debug
+	sccmhunter.py find -u blwasp -p Password123! -d lab.local -dc-ip 172.50.0.10
+	python3 sccmhunter.py show -all
+	sccmhunter.py smb -u blwasp -p Password123! -d lab.local -dc-ip 172.50.0.10 -save
+
 # Exchange
 
 # Proxylogon
