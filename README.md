@@ -1660,7 +1660,7 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	impacket-changepasswd ignite. расположение /DEMO$@ 192.168 . 1 . 48  -newpass  'Password@987'  -p rpc-samr
 
 
-# Get Kyocera creds
+# Get Kyocera creds (TCP-порт 9091)
 		getkyoseracreds.sh
 	-- in archive
 	
