@@ -163,6 +163,24 @@
 		  
 		(Пользователи залогиненные на компе)	sudo crackmapexec smb 172.16.5.130 -u forend -p Klmcargo2 --loggedon-users 
 
+		# SHARES
+		# Использование функции «Паук» для поиска файлов, содержащих "txt"
+	nxc smb 10.129.203.121 -u grace -p Inlanefreight01! --spider IT --pattern txt
+
+	#Вывести список всех файлов и папок в общей папке ИТ.
+	nxc smb 10.129.204.177 -u grace -p Inlanefreight01! --spider IT --regex .
+
+	# Поиск содержимого в файле
+	(Ищем слово Encrypt в шаре IT) nxc smb 10.129.204.177 -u grace -p Inlanefreight01! --spider IT --content --regex Encrypt
+
+	# Получение файла из общей папки
+	nxc smb 10.129.203.121 -u grace -p Inlanefreight01! --share IT --get-file Creds.txt Creds.txt
+
+	# Отправка файла в общую папку
+	nxc smb 10.129.203.121 -u grace -p Inlanefreight01! --share IT --put-file /etc/passwd passwd [--smb-timeout 3]
+
+	# список файлов доступных пользователю c загрукзой
+	mxc smb 10.129.203.121 -u grace -p Inlanefreight01! -M spider_plus -o EXCLUDE_DIR=ADMIN$,IPC$,print$,NETLOGON,SYSVOL READ_ONLY=false
 
 	
 * clock sync
