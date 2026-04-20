@@ -205,7 +205,11 @@
 
 	# Получение пароля gMSA 
 	crackmapexec ldap dc01.inlanefreight.htb -u engels -p Inlanefreight1998! --gmsa
-	
+
+	# PowerShell Command Execution via WinRM etc...
+	nxc smb winrm 10.129.204.133 -u robert -p 'Inlanefreight01!' -X '$PSVersionTable'
+	# Command Execution with SSH Using a Private Key
+	nxc ssh 10.129.204.133 -u julio --key-file id_ed25519 -p "" -x whoami
 	
 # clock sync
 
