@@ -1915,4 +1915,5 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	
 FREE IPA
 ldapsearch -x -H ldap://10.24.x.x -b 'dc=dc,dc=rom,dc=ru' -s sub "(objectClass=*)" - поиск пользователей из ldap
+ldapsearch -x -H ldap://server -D 'domain\user' -w 'password'
 ldapwhoami -x -H ldap://your-ldap-server.com -D "cn=admin,dc=example,dc=com" -w your_password	- перебор паролей с ldap
