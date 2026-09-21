@@ -8,6 +8,9 @@
 	10.0.0.0/8
 	172.16.0.0/12	172.16.0.0-172.31.255.255
 	192.168.0.0/16
+# поиск крнтроллеров домена
+
+	nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
 
 # Domain
 	1. Основная самая лучшая справка по Active Directory:
