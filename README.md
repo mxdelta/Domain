@@ -600,21 +600,7 @@
 
  	   	impacket-changepasswd 'vd.local/lamont.sibeal:passwd'@192.168.50.110 -newpass 'Password123'
 
-* Bloodhoundlist 
 
-		bloodhound-python -d vd.local -u lamont.sibeal -p Password123 -c all --dns-tcp -ns 192.168.50.110
-		bloodhound-python -d htb.local -ns 10.10.10.161 -u 'svc-alfresco' -p 's3rvice' -c all
-		bloodhound-python -u ldap_monitor -p '1GR8t@$$4u' -d rebound.htb -dc dc01.rebound.htb --zip -c Group,LocalAdmin,RDP,DCOM,Container,PSRemote,Session,Acl,Trusts,LoggedOn -ns 10.10.11.231
-		
-		Запуск
-
-		cd /usr/bin && sudo ./neo4j console
-
-		cd /home/max/BloodHound-linux-x64_new && ./BloodHound --no-sandbox
-  
-  		cat 20240201210210_users.json|jq '.data[].Properties | .samaccountname + ":" + .description' -r
-
-	
 
 * DCOM Abusing
 
