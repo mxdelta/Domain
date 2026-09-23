@@ -93,17 +93,6 @@
 		# Затем использовать с Nmap
 		nmap -sV -sC -iL nmap_targets.txt -oA scan_results
 
-* DNS resolver
-  
-		Файл /etc/resolv.conf — это конфигурационный файл DNS-резолвера
-  			nameserver 10.28.16.3
-			nameserver 10.28.16.1
-			search dgg.zazrom.htb
-  
-  			nameserver 10.28.16.3 и nameserver 10.28.16.1 (Это IP-адреса DNS-серверов, которые ваша система использует для разрешения доменных имен.
-			Система будет обращаться к ним в порядке очередности: сначала к 10.28.16.3, если он недоступен — к 10.28.16.1.)
- 		 	search dgg.zazrom.htb -резлв коротких имен
-
 # Domain
 	1. Основная самая лучшая справка по Active Directory:
 	https://orange-cyberdefense.github.io/ocd-mindmaps/img/mindmap_ad_dark_classic_2025.03.excalidraw.svg
