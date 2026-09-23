@@ -11,7 +11,11 @@
 # поиск крнтроллеров домена Trasfer DNS ZONE and DNS recon
 	nslookup -type=srv _ldap._tcp.dc._msdcs.ara.enerjjgobank.ru 	(домен ara.enerjjgobank.ru)
 	nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
-	
+	nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
+	Общее перечисление SRV-записей с контроллера домена dc2.dgg.game.ru
+  	nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru			(game.ru) домен
+	nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
+
 	dig @10.10.11.5 freelancer.htb axfr		(dns-server   domain)
 	dig @<ip> <домен> NS
   	Смотрим в DNS  в ptr записи:
@@ -32,12 +36,6 @@
 
 * Trasfer DNS ZONE and DNS recon
 
-		nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
-		Общее перечисление SRV-записей с контроллера домена dc2.dgg.game.ru
-  		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru			(game.ru) домен
-		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
-
-  		
 		1) Смотрим в DNS  в ptr записи: dnsrecon -r 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 (но поочереди)
 
 		sudo arp-scan --localnet 		(arp сканирование сети)
