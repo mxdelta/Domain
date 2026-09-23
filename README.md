@@ -29,6 +29,81 @@
 			Система будет обращаться к ним в порядке очередности: сначала к 10.28.16.3, если он недоступен — к 10.28.16.1.)
  		 	search dgg.zazrom.htb -резлв коротких имен
 
+
+* Trasfer DNS ZONE and DNS recon
+
+		nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
+		Общее перечисление SRV-записей с контроллера домена dc2.dgg.game.ru
+  		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru			(game.ru) домен
+		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
+
+  		
+		1) Смотрим в DNS  в ptr записи: dnsrecon -r 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 (но поочереди)
+
+		sudo arp-scan --localnet 		(arp сканирование сети)
+
+		 nslookup
+		> server 10.10.10.248
+		Default server: 10.10.10.248
+		Address: 10.10.10.248#53
+		> svc_int.intelligence.htb
+		Server:         10.10.10.248
+		Address:        10.10.10.248#53
+*******************************************************
+		vim /etc/hosts/ ----> 10.129.203.6 inlanefreight.htb
+		subfinder -d inlanefreight.com -v
+		git clone https://github.com/TheRook/subbrute.git >> /dev/null 2>&1
+		cd subbrute
+		echo "ns1.inlanefreight.com" > ./resolvers.txt
+		./subbrute.py inlanefreight.com -s ./names.txt -r ./resolvers.txt
+
+*******************************************************
+		dnstool.py -u 'intelligence\Tiffany.Molina' -p NewIntelligenceCorpUser9876 			10.10.10.248 -a add -r web1 -d 10.10.14.58 -t A (создание ДНС записи в домене)
+
+* Recon Lan
+
+  		10.0.0.0/8 (маска 255.0.0.0)
+	    172.16.0.0/12 (маска 255.240.0.0)
+	    192.168.0.0/16 (маска 255.255.0.0)
+
+  		fping -ag 10.129.203.0/24 2>/dev/null
+  		sudo netdiscover -r 10.129.203.0/24
+		sudo netdiscover -i eth0
+		
+  		sudo masscan -p1-1000 10.129.203.0/24 --rate=1000
+  		sudo masscan -p1-1000 10.129.203.6 -oG masscan_results.txt
+
+		# В формате XML
+		sudo masscan -p1-10000 10.129.203.6 -oX masscan_results.xml
+
+		# В формате JSON
+		sudo masscan -p1-10000 10.129.203.6 -oJ masscan_results.json
+
+		# Вывод только открытых портов
+		sudo masscan -p1-10000 10.129.203.6 --open-only
+
+		# Извлечение только IP и портов
+		grep "open" masscan_results.txt | awk '{print $4, $3}'
+		sudo masscan -p21,22,23,25,53,80,88,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080,8443,9000,9001,10000,513,514,515,548,587,626,993,995,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044 192.168.0.0/24 (-iL hosts.txt) -oG masscan_results.txt --rate 2000
+
+		grep "open" masscan_results.txt | awk '{print $4, $7}' |  cut -d'/' -f1
+
+  		# Извлечь IP:порт для последующего сканирования Nmap
+		grep "open" masscan_results.txt | awk -F" " '{print $4}' | awk -F"/" '{print $1}' > nmap_targets.txt
+		# Затем использовать с Nmap
+		nmap -sV -sC -iL nmap_targets.txt -oA scan_results
+
+* DNS resolver
+  
+		Файл /etc/resolv.conf — это конфигурационный файл DNS-резолвера
+  			nameserver 10.28.16.3
+			nameserver 10.28.16.1
+			search dgg.zazrom.htb
+  
+  			nameserver 10.28.16.3 и nameserver 10.28.16.1 (Это IP-адреса DNS-серверов, которые ваша система использует для разрешения доменных имен.
+			Система будет обращаться к ним в порядке очередности: сначала к 10.28.16.3, если он недоступен — к 10.28.16.1.)
+ 		 	search dgg.zazrom.htb -резлв коротких имен
+
 # Domain
 	1. Основная самая лучшая справка по Active Directory:
 	https://orange-cyberdefense.github.io/ocd-mindmaps/img/mindmap_ad_dark_classic_2025.03.excalidraw.svg
@@ -433,82 +508,7 @@
 		nfs> ls 
 
 
-   
-* Trasfer DNS ZONE and DNS recon
-
-		nslookup -type=SRV _ldap._tcp.dc._msdcs.dgg.tgg.zazpbom.ru 	(домен dgg.tgg.zazpbom.ru - поиск контроллеров домена)
-		Общее перечисление SRV-записей с контроллера домена dc2.dgg.game.ru
-  		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru			(game.ru) домен
-		nslookup -type=SRV _ldap._tcp.dc._msdcs.game.ru 192.168.50.100 (один из котроллеров для поиска всех котроллеров)
-
-  		
-		1) Смотрим в DNS  в ptr записи: dnsrecon -r 10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16 (но поочереди)
-
-		sudo arp-scan --localnet 		(arp сканирование сети)
-
-		 nslookup
-		> server 10.10.10.248
-		Default server: 10.10.10.248
-		Address: 10.10.10.248#53
-		> svc_int.intelligence.htb
-		Server:         10.10.10.248
-		Address:        10.10.10.248#53
-*******************************************************
-		vim /etc/hosts/ ----> 10.129.203.6 inlanefreight.htb
-		subfinder -d inlanefreight.com -v
-		git clone https://github.com/TheRook/subbrute.git >> /dev/null 2>&1
-		cd subbrute
-		echo "ns1.inlanefreight.com" > ./resolvers.txt
-		./subbrute.py inlanefreight.com -s ./names.txt -r ./resolvers.txt
-
-*******************************************************
-		dnstool.py -u 'intelligence\Tiffany.Molina' -p NewIntelligenceCorpUser9876 			10.10.10.248 -a add -r web1 -d 10.10.14.58 -t A (создание ДНС записи в домене)
-
-* Recon Lan
-
-  		10.0.0.0/8 (маска 255.0.0.0)
-	    172.16.0.0/12 (маска 255.240.0.0)
-	    192.168.0.0/16 (маска 255.255.0.0)
-
-  		fping -ag 10.129.203.0/24 2>/dev/null
-  		sudo netdiscover -r 10.129.203.0/24
-		sudo netdiscover -i eth0
-		
-  		sudo masscan -p1-1000 10.129.203.0/24 --rate=1000
-  		sudo masscan -p1-1000 10.129.203.6 -oG masscan_results.txt
-
-		# В формате XML
-		sudo masscan -p1-10000 10.129.203.6 -oX masscan_results.xml
-
-		# В формате JSON
-		sudo masscan -p1-10000 10.129.203.6 -oJ masscan_results.json
-
-		# Вывод только открытых портов
-		sudo masscan -p1-10000 10.129.203.6 --open-only
-
-		# Извлечение только IP и портов
-		grep "open" masscan_results.txt | awk '{print $4, $3}'
-		sudo masscan -p21,22,23,25,53,80,88,110,111,135,139,143,443,445,993,995,1723,3306,3389,5900,8080,8443,9000,9001,10000,513,514,515,548,587,626,993,995,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044 192.168.0.0/24 (-iL hosts.txt) -oG masscan_results.txt --rate 2000
-
-		grep "open" masscan_results.txt | awk '{print $4, $7}' |  cut -d'/' -f1
-
-  		# Извлечь IP:порт для последующего сканирования Nmap
-		grep "open" masscan_results.txt | awk -F" " '{print $4}' | awk -F"/" '{print $1}' > nmap_targets.txt
-		# Затем использовать с Nmap
-		nmap -sV -sC -iL nmap_targets.txt -oA scan_results
-
-* DNS resolver
-  
-		Файл /etc/resolv.conf — это конфигурационный файл DNS-резолвера
-  			nameserver 10.28.16.3
-			nameserver 10.28.16.1
-			search dgg.zazrom.htb
-  
-  			nameserver 10.28.16.3 и nameserver 10.28.16.1 (Это IP-адреса DNS-серверов, которые ваша система использует для разрешения доменных имен.
-			Система будет обращаться к ним в порядке очередности: сначала к 10.28.16.3, если он недоступен — к 10.28.16.1.)
- 		 	search dgg.zazrom.htb -резлв коротких имен
-		
-* user found
+   * user found
 		- with Kerbrute
 
 		https://github.com/insidetrust/statistically-likely-usernames (списки юзеров)
