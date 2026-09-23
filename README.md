@@ -18,6 +18,17 @@
   	dnsrecon -r 192.168.0.0/16  -n 192.168.2.11 - (dns server) 	(Обратный обход (Reverse Lookup) диапазона IP-адресов для поиска PTR-записей)
 	dnsrecon -d bank.htb -a -n 192.168.2.37 -(dns server)	(Метод «прямого запроса»: Запрашивает у конкретного DNS-сервера полную копию его зоны для домена.)
 
+* DNS resolver
+  
+		Файл /etc/resolv.conf — это конфигурационный файл DNS-резолвера
+  			nameserver 10.28.16.3
+			nameserver 10.28.16.1
+			search dgg.zazrom.htb
+  
+  			nameserver 10.28.16.3 и nameserver 10.28.16.1 (Это IP-адреса DNS-серверов, которые ваша система использует для разрешения доменных имен.
+			Система будет обращаться к ним в порядке очередности: сначала к 10.28.16.3, если он недоступен — к 10.28.16.1.)
+ 		 	search dgg.zazrom.htb -резлв коротких имен
+
 # Domain
 	1. Основная самая лучшая справка по Active Directory:
 	https://orange-cyberdefense.github.io/ocd-mindmaps/img/mindmap_ad_dark_classic_2025.03.excalidraw.svg
