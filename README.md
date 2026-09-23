@@ -435,10 +435,6 @@
 		(получение krb5.conf) nxc smb dc01.mirage.htb -d mirage.htb -k --generate-krb5-file krb5.conf
 		sudo mv krb5.conf /etc/krb5.conf
 		
-# Users auth on host
-
-  		sudo crackmapexec smb 172.16.5.130 -u forend -p Klmcargo2 --loggedon-users
-  
 # Password policies
    
 		crackmapexec smb 192.168.50.110 -u 'albertina.albertina' -p animal --pass-pol 
@@ -568,10 +564,6 @@
   
 		crackmapexec smb 192.168.50.110 -u 'Administrator' -p 'Password321' --local-auth 
 
-* Users auth on host
-
-  		sudo crackmapexec smb 172.16.5.130 -u forend -p Klmcargo2 --loggedon-users
-  
 * Password policies
    
 		crackmapexec smb 192.168.50.110 -u 'albertina.albertina' -p animal --pass-pol 
