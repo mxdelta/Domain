@@ -1809,13 +1809,13 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 
 
 # Get Kyocera creds (TCP-порт 9091)
-		rustscan -a 192.168.0.0/16 -p 9091 --ulimit 5000 -b 1000 -t 1500 -g > 9091_192.txt
+		rustscan -a 192.168.0.0/16 -p 9091 --ulimit 5000 -b 1000 -t 1500 -g >> 9091_192.txt
 		cat 9091_192.txt | awk {'print $1'}
 
-		rustscan -a 10.0.0.0/8 -p 9091 --ulimit 5000 -b 1000 -t 1500 -g > 9091_10.txt
+		rustscan -a 10.0.0.0/8 -p 9091 --ulimit 5000 -b 1000 -t 1500 -g >> 9091_10.txt
 		cat 9091_10.txt | awk {'print $1'}
 
-		rustscan -a 172.16.0.0/12 -p 9091 --ulimit 5000 -b 1000 -t 1500 -g > 9091_172.txt
+		rustscan -a 172.16.0.0/12 -p 9091 --ulimit 5000 -b 1000 -t 1500 -g >> 9091_172.txt
 		cat 9091_172.txt | awk {'print $1'}
 		
 		getkyoseracreds.sh
